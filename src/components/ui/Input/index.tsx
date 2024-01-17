@@ -5,10 +5,11 @@ interface IInput {
     type: "text" | "password",
     placeholder: string,
     value?: string,
+    required?: boolean
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const Input: FC<IInput> = ({type, placeholder, onChange, value}) => {
+const Input: FC<IInput> = ({type, placeholder, onChange, value, required}) => {
     return(
         <input 
             type={type} 
@@ -16,6 +17,7 @@ const Input: FC<IInput> = ({type, placeholder, onChange, value}) => {
             placeholder={placeholder}
             onChange={onChange}
             value={value}
+            required={required}
         />
     )
 };

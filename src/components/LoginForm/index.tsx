@@ -13,11 +13,13 @@ const LoginForm = () => {
                     <form className={styles.form}>
                         <Input 
                             type='text' 
-                            placeholder='Username' 
+                            placeholder='Username'
+                            required={true} 
                         />
                         <Input 
                             type='password' 
                             placeholder='Password'
+                            required={true} 
                         />
                         <Button type='login'>Войти</Button>
                     </form>

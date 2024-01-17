@@ -1,10 +1,13 @@
 @import '../../styles/variables.scss';
 
 .inner {
-    width: 180px;
+    width: 240px;
     height: 100vh;
-    display: block;
-    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    z-index: 10;
     padding: 30px;
     box-shadow: -1.5px 0px 0px 0px rgba(255, 255, 255, 0.15) inset;
 }
@@ -28,19 +31,65 @@
 .link {
     display: flex;
     align-items: center;
-    padding: 15px 20px;
+    padding: 12px 20px 12px;
     border-radius: 13px;
     background: $bg_link;
-    color: $color_link;
-    font-size: 20px;
+
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    color: $color_link;
+    font-size: 18px;
+    text-decoration: none;
+    transition: .3s;
 
-    & a {
-        color: $color_link;
-        font-size: 16px;
-        text-decoration: none;
-        margin-left: 15px;
+    & svg {
+        margin-right: 15px;
+        width: 24px;
+        height: 24px;
+    }
+
+    &:hover {
+        color: $white;
+    }
+
+    
+    &:active {
+        transform: scale(.8);
     }
 }
+
+.btn {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px 12px;
+    border-radius: 13px;
+    border: none;
+    outline: none;
+    background: none;
+
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    color: $light_gray;
+    font-size: 18px;
+    text-decoration: none;
+    transition: .3s;
+
+    & svg {
+        margin-right: 15px;
+        width: 24px;
+        height: 24px;
+    }
+
+    &:hover {
+        color: $color_link;
+        background: $bg_link;
+        cursor: pointer;
+    }
+
+    &:active {
+        transform: scale(.8);
+    }
+}
+

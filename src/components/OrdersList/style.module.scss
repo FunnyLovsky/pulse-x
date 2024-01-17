@@ -1,0 +1,38 @@
+@import '../../styles/variables.scss';
+
+.inner {
+    width: calc(100% - 240px);
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    color: $white;
+}
+
+.title {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+
+    & h4 {
+        color: $light_gray;
+    }
+
+    & img {
+        width: 47px;
+        height: 47px;
+        background: $bg_link;
+        border-radius: 50%;
+        padding: 3px;
+        margin-left: 10px;
+    }
+}
+
+

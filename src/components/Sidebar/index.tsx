@@ -2,18 +2,28 @@ import { Link } from 'react-router-dom';
 import Logo from '../ui/Logo';
 import styles from './style.module.scss';
 import { RoutesName } from '../../router/routes';
+import { IoReorderFour, IoLogOutOutline } from "react-icons/io5";
 
 const Sidebar = () => {
     return(
         <div className={styles.inner}>
-            <div className={styles.logo}>
-                <Logo/>
-                <h2 className={styles.title}>PulseX</h2>
+
+            <div className={styles.item}>
+                <div className={styles.logo}>
+                    <Logo/>
+                    <h2 className={styles.title}>PulseX</h2>
+                </div>
+                <Link to={RoutesName.ORDERS} className={styles.link}>
+                    <IoReorderFour/>
+                    <p>Заявки</p>
+                </Link>
             </div>
-            <div className={styles.link}>
-                <div className={styles.icon}>$</div>
-                <Link to={RoutesName.ORDERS}>Заявки</Link>
-            </div>
+
+            <button className={styles.btn}>
+                <IoLogOutOutline/>
+                <p>Выход</p>
+            </button>
+
         </div>
     )
 };
