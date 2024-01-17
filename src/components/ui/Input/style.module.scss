@@ -1,0 +1,22 @@
+@import '../../../styles/variables.scss';
+
+.input {
+    background: $input_bg;
+    display: block;
+    margin: 0 auto;
+    color: $input_color;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    width: 200px;
+
+    &::placeholder {
+        color: $light_purple;
+    }
+}

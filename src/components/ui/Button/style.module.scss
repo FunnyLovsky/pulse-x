@@ -1,0 +1,32 @@
+@import '../../../styles/variables.scss';
+
+.btn {
+    display: block;
+
+    color: $white;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border-radius: 10px;
+    text-align: center;
+    transition: .3s;
+
+    &:active {
+        transform: scale(0.8);
+    }
+}
+
+.login {
+    margin: 30px auto 15px;
+    padding: 10px 50px;
+    background: #AC6AEC ;
+
+    &:hover {
+        cursor: pointer;
+        background:  #903de3;
+    }
+
+}
