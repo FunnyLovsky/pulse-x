@@ -1,6 +1,10 @@
+import Sidebar from "../components/Sidebar";
+
 const Orders = () => {
     return(
-        <div>Orders</div>
+        <>
+            <Sidebar/>
+        </>
     )
 };
 

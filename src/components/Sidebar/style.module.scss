@@ -1,0 +1,46 @@
+@import '../../styles/variables.scss';
+
+.inner {
+    width: 180px;
+    height: 100vh;
+    display: block;
+    position: fixed;
+    padding: 30px;
+    box-shadow: -1.5px 0px 0px 0px rgba(255, 255, 255, 0.15) inset;
+}
+
+.logo {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 70px;
+}
+
+.title {
+    margin-left: 15px;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    color: $purple;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: 13px;
+    background: $bg_link;
+    color: $color_link;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+    & a {
+        color: $color_link;
+        font-size: 16px;
+        text-decoration: none;
+        margin-left: 15px;
+    }
+}
