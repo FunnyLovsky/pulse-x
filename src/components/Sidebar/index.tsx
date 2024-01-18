@@ -3,8 +3,11 @@ import Logo from '../ui/Logo';
 import styles from './style.module.scss';
 import { RoutesName } from '../../router/routes';
 import { IoReorderFour, IoLogOutOutline } from "react-icons/io5";
+import { useActions } from '../../store/hooks/useActions';
 
 const Sidebar = () => {
+    const {logout} = useActions()
+    
     return(
         <div className={styles.inner}>
 
@@ -19,7 +22,10 @@ const Sidebar = () => {
                 </Link>
             </div>
 
-            <button className={styles.btn}>
+            <button 
+                className={styles.btn}
+                onClick={logout}
+            >
                 <IoLogOutOutline/>
                 <p>Выход</p>
             </button>

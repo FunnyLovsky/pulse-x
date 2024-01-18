@@ -1,0 +1,63 @@
+@import '../../../styles/variables.scss';
+
+.btn {
+    display: block;
+    position: relative;
+
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border-radius: 10px;
+    text-align: center;
+    transition: .3s;
+}
+
+.active {
+    margin: 30px auto 15px;
+    padding: 10px 50px;
+    color: $white;
+    background: #AC6AEC ;
+
+    &:hover {
+        cursor: pointer;
+        background:  #903de3;
+    }
+
+    &:active {
+        transform: scale(0.8);
+    }
+}
+
+.dis {
+    margin: 30px auto 15px;
+    padding: 10px 50px;
+    background: #ab6aec ;
+    color: #ffffff;
+    cursor: not-allowed
+}
+
+.loader {
+    position: absolute;
+    left: 15px;
+    width: 16px;
+    height: 16px;
+    border: 3px solid #FFF;
+    border-bottom-color: #EC5EB7;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;    
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+} 

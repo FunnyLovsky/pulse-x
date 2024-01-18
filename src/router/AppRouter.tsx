@@ -1,9 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { RoutesName, authRoutes, publicRoutes } from "./routes";
+import { useAppSelector } from "../store/hooks/useAppSelector";
 
 const AppRouter = () => {
-    const isAuth = true;
-
+    const {isAuth} = useAppSelector(state => state.authReducer);
+    
     return(
         <div>
             {isAuth 
