@@ -1,0 +1,100 @@
+@import '../../styles/variables.scss';
+
+.order {
+    margin: 20px 0;
+    display: flex;
+    justify-content: flex-start;
+    font-weight: 600;
+    font-size: 12px;
+    font-style: normal;
+    line-height: normal;
+    color: $white;
+}
+
+.item {
+    &:nth-child(1) {
+        width: 14%;
+    }
+
+    &:nth-child(2), &:nth-child(3) {
+        width: 18%;
+    }
+
+    &:nth-child(4) {
+        width: 13%;
+    }
+
+    &:nth-child(5) {
+        width: 8%;
+    }
+
+    &:nth-child(6) {
+        width: 9%;
+    }
+
+    &:nth-child(7) {
+        width: 12%;
+    }
+
+    &:nth-child(8) {
+        width: 9%;
+    }
+}
+
+.date {
+    font-weight: 400;
+    & span:first-child {
+        color: $light_gray
+    }
+}
+
+.status {
+    padding: 0px 8px;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.Active {
+    color: #867436;
+    background: #F5D76E;
+}
+
+.Filled {
+    background: #4ED4AB;
+    color: #157759;
+}
+
+.Rejected {
+    color: #923636;
+    background: #FE6667;
+}
+
+.Cancelled {
+    color: #3F3F74;
+    background: #9292C1;
+}
+
+.Buy {
+    color: #FF2D2E;
+    font-weight: 400;
+}
+
+.Sell {
+    color: #00C287;
+    font-weight: 400;
+}
+
+.price {
+    color: $light_purple;
+    font-weight: 400;
+}
+
+.instrument {
+    display: flex;
+    align-items: center;
+
+    & img {
+        margin: 0 5px;
+        width: 15px;
+    }
+}

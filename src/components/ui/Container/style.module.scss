@@ -6,3 +6,8 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.inner {
+    width: calc(100% - 240px);
+    padding: 0 30px;
+}

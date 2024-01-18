@@ -1,38 +1,70 @@
 @import '../../styles/variables.scss';
 
 .inner {
-    width: calc(100% - 240px);
-    height: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 30px;
-    color: $white;
+    background: $bg_elem;
+    padding: 20px 25px 30px;
+    border-radius: 20px;
+    width: 75%;
 }
 
 .title {
-    font-size: 24px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    color: $white;
+    margin-bottom: 20px;
 }
 
-.user {
+.header {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
+    color: #9A9A9A;
+    font-size: 10px;
+    font-style: normal;
 
-    & h4 {
-        color: $light_gray;
-    }
+    line-height: normal;
 
-    & img {
-        width: 47px;
-        height: 47px;
-        background: $bg_link;
-        border-radius: 50%;
-        padding: 3px;
-        margin-left: 10px;
+    & p {
+        &:nth-child(1) {
+            width: 14%;
+        }
+    
+        &:nth-child(2), &:nth-child(3) {
+            width: 18%;
+        }
+    
+        &:nth-child(4) {
+            width: 13%;
+        }
+    
+        &:nth-child(5) {
+            width: 8%;
+        }
+    
+        &:nth-child(6) {
+            width: 9%;
+        }
+    
+        &:nth-child(7) {
+            width: 12%;
+        }
+    
+        &:nth-child(8) {
+            width: 9%;
+        }
     }
+}
+
+.order {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 12px;
+    font-style: normal;
+    line-height: normal;
+    color: $white;
 }
 
 

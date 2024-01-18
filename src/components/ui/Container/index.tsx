@@ -8,7 +8,9 @@ interface IButton {
 const Container: FC<IButton> = ({children}) => {
     return(
         <div className={styles.container}>
-            {children}
+            <div className={styles.inner}>
+                {children}
+            </div>
         </div>
     )
 };
