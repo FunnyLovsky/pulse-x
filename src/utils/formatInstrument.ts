@@ -1,6 +1,6 @@
-import { Instrument } from "../../../api/Enums"
+import { Instrument } from "../api/Enums"
 
-export const getInstrument = (instrument: number) => {
+export const formatInstrument = (instrument: number) => {
     switch (instrument) {
         case Instrument.eur_usd:
             return ['EUR', 'USD']

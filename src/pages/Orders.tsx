@@ -1,5 +1,5 @@
 import Header from "../components/Header";
-import OrderList from "../components/OrdersList";
+import OrderMain from "../components/OrderMain";
 import Sidebar from "../components/Sidebar";
 
 const Orders = () => {
@@ -7,7 +7,7 @@ const Orders = () => {
         <>
             <Sidebar/>
             <Header/>
-            <OrderList/>
+            <OrderMain/>
         </>
     )
 };

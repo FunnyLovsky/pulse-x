@@ -1,8 +1,8 @@
 import { bindActionCreators } from "@reduxjs/toolkit";
 import { useAppDispatch } from "./useAppDispath";
-import { allActions } from "../reducers/allActions";
+import { allActionCreators } from "../reducers/allActionCreators";
 
 export const useActions = () => {
     const dispath = useAppDispatch();
-    return bindActionCreators(allActions, dispath)
+    return bindActionCreators(allActionCreators, dispath)
 }

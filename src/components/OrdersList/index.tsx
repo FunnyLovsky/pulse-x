@@ -1,5 +1,5 @@
 import Order from '../Order';
-import Container from '../ui/Container';
+
 import styles from './style.module.scss';
 
 
@@ -11,7 +11,7 @@ const OrderList = () => {
         {id: `f${(+new Date()).toString(16)}`, create: Date.now(), change: Date.now(), status: 4, side: 2, price: 4.034, amount: 10000, instrument: 3}
     ]
     return(
-        <Container>
+    
             <div className={styles.inner}>
                 <h2 className={styles.title}>Список заявок</h2>
                 <div className={styles.header}>
@@ -24,25 +24,20 @@ const OrderList = () => {
                     <p>Объем</p>
                     <p>Инструмент</p>
                 </div>
-                <div className={styles.list}>
-                    {orders.map(order => 
-                        <Order 
-                            key={order.id}
-                            id={order.id}
-                            create={order.create}
-                            change={order.change}
-                            status={order.status}
-                            side={order.side}
-                            amount={order.amount}
-                            price={order.price}
-                            instrument={order.instrument}
-                        />
-                    )}
-                </div>
+                {orders.map((order, index) => 
+                    <Order 
+                        key={order.id + index}
+                        id={order.id}
+                        create={order.create}
+                        change={order.change}
+                        status={order.status}
+                        side={order.side}
+                        amount={order.amount}
+                        price={order.price}
+                        instrument={order.instrument}
+                    />
+                )}
             </div>
-
-        </Container>
-
     )
 };
 

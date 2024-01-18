@@ -3,7 +3,7 @@ import styles from './style.module.scss';
 import { formatDate } from '../../utils/formatDate';
 import { getStatus } from './utils/getStatus';
 import { getSide } from './utils/getSide';
-import { getInstrument } from './utils/getInstrument';
+import { formatInstrument } from '../../utils/formatInstrument';
 import ARROWS from '../../assets/arrows.svg';
 import { formatNumber } from '../../utils/formatNumber';
 
@@ -24,7 +24,7 @@ const Order: FC<IOrder> = ({id, create, change, status, side, amount, instrument
     const orderStatus = getStatus(status);
     const styleStatus = [styles.status, styles[orderStatus!]].join(' ');
     const orderSide = getSide(side);
-    const [firsIn, secondIn] = getInstrument(instrument);
+    const [firsIn, secondIn] = formatInstrument(instrument);
 
     return(
         <div className={styles.order}>

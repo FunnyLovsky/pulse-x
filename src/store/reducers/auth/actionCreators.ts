@@ -48,7 +48,7 @@ const checkLogin = () => async (dispatch: AppDispatch) => {
     dispatch(setIsAuthLoading(false));
 }
 
-export const AuthActions = {
+export const AuthActionCreators = {
     login,
     logout,
     checkLogin
