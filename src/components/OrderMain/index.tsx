@@ -4,30 +4,37 @@ import OrderList from '../OrdersList';
 import Ticker from '../Ticker';
 import Container from '../ui/Container';
 import styles from './style.module.scss';
-import { connectSocket, disconnectedSocket } from '../../store/reducers/socket';
-import { useDispatch } from 'react-redux';
+import { useActions } from '../../store/hooks/useActions';
+import { useAppSelector } from '../../store/hooks/useAppSelector';
 
 const OrderMain = () => {
-    console.log('order main')
-    const dispatch = useDispatch();
+    const {connect, disconnect} = useActions()
+    const {isConnected} = useAppSelector(state => state.socketReducer)
 
     useEffect(() => {
-        dispatch(connectSocket());
-        console.log('comp: conncet')
+        connect()
 
         return () => {
-            dispatch(disconnectedSocket())
+            disconnect()
         }
-    }, [dispatch])
+    }, [])
 
-    return(
+    return (
         <Container>
-            <div className={styles.main}>
-                <OrderList/>
-                <Ticker/>
-            </div>
+            {isConnected ? (
+                <div className={styles.main}>
+                    <OrderList />
+                    <Ticker />
+                </div>
+            ) : (
+                <>
+                    <h1>Data is loading...</h1>
+                    <button onClick={connect}>Connect</button>
+                </>
+            )}
+
         </Container>
-    )
+    );
 };
 
 export default OrderMain;

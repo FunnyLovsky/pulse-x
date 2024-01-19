@@ -1,7 +1,8 @@
 import { Middleware } from "@reduxjs/toolkit";
-import { connectSocket, connectedSocket, disconnectedSocket, sendMessage, setError } from ".";
+import { connectSocket, disconnectedSocket, sendMessage, setError, connected, disconnected} from ".";
 
 export const socketMiddleware = (url: string): Middleware => {
+    console.log('middleware')
     let socket: WebSocket | null = null;
 
     return (store) => (next) => (action: any) => {
@@ -13,29 +14,30 @@ export const socketMiddleware = (url: string): Middleware => {
 
                     socket.onopen = () => {
                         console.log('open');
-                        store.dispatch(connectedSocket());
+                        store.dispatch(connected());
                     }
 
                     socket.onclose = () => {
                         console.log('close');
-                        store.dispatch(disconnectedSocket());
+                        store.dispatch(disconnected());
+                        socket = null
                     }
 
                     socket.onerror = (error: any) => {
                         console.log('error');
-                        // store.dispatch(setError(error.message));
-                        store.dispatch(disconnectedSocket());
+                        store.dispatch(disconnected());
+                        socket = null
                     }
 
                     socket.onmessage = (event) => {
-                        console.log('message');
-                        console.log(event.data);
+                        console.log('message:', event.data);
                     }
                 }
                 break;
 
             case disconnectedSocket.type:
                 if (socket && socket.readyState !== WebSocket.CLOSED) {
+                    console.log('socket.close()')
                     socket.close();
                 }
                 break;
@@ -43,6 +45,7 @@ export const socketMiddleware = (url: string): Middleware => {
             case sendMessage.type:
                 try {
                     if (socket && socket.readyState === WebSocket.OPEN) {
+                        console.log('user message:', action.payload)
                         socket.send(action.payload);
                     }
                 } catch (error: any) {

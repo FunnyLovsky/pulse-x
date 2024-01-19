@@ -18,30 +18,28 @@ const socketReducer = createSlice({
     name: 'socket',
     initialState,
     reducers: {
-        connectSocket(state) {
-            state.isConnected = false;
+        connectSocket(state) {},
+        
+        disconnectedSocket(state) {},
+
+        connecting(state) {
             state.isLoading = true;
         },
 
-        connectedSocket(state) {
-            console.log('connected')
+        connected(state) {
             state.isConnected = true;
             state.isLoading = false;
         },
 
-        setIsLoading(state, action: PayloadAction<boolean>) {
-            state.isLoading = action.payload
+        disconnected(state) {
+            state.isConnected = false;
+            state.isLoading = false;
+            state.error = null;
         },
         
         setError(state, action: PayloadAction<string | null>) {
             state.error = action.payload;
             state.isLoading = false;
-        },
-
-        disconnectedSocket(state) {
-            state.isConnected = false;
-            state.message = null;
-            state.error = null;
         },
 
         sendMessage(state, action: PayloadAction<{}>) {
@@ -50,5 +48,5 @@ const socketReducer = createSlice({
     }
 })
 
-export const {setError, setIsLoading, connectedSocket, disconnectedSocket, sendMessage, connectSocket} = socketReducer.actions
+export const {setError, disconnectedSocket, sendMessage, connectSocket, connected, disconnected, connecting} = socketReducer.actions
 export default socketReducer.reducer

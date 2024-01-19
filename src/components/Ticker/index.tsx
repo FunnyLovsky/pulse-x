@@ -1,6 +1,8 @@
+import { useActions } from '../../store/hooks/useActions';
 import styles from './style.module.scss';
 
 const Ticker = () => {
+    const {send} = useActions()
     return(
         <div className={styles.cont}>
             <div className={styles.inner}>
@@ -17,7 +19,7 @@ const Ticker = () => {
                 </div>
                 <div className={styles.item}>
                     <div className={styles.price}>8.20</div>
-                    <button>Sell</button>
+                    <button onClick={() => send('Websocke')}>Sell</button>
                 </div>
             </div>
         </div>

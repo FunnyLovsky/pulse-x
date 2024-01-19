@@ -1,13 +1,10 @@
-import { setIsLoading, connectedSocket, disconnectedSocket, sendMessage} from "."
+import {  disconnectedSocket, sendMessage, connectSocket, connecting} from "."
 import { AppDispatch } from "../.."
 
 
 const connect = () => async (dispath: AppDispatch) => {
-    dispath(setIsLoading(true));
-
-    // await new Promise(resolve => setTimeout(resolve, 1000)); 
-    
-    dispath(connectedSocket());
+    dispath(connecting());
+    dispath(connectSocket());
 }
 
 const send = (data: any) => async (dispatch: AppDispatch) => {
