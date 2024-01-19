@@ -4,37 +4,19 @@ import OrderList from '../OrdersList';
 import Ticker from '../Ticker';
 import Container from '../ui/Container';
 import styles from './style.module.scss';
-import { useActions } from '../../store/hooks/useActions';
-import { useAppDispatch } from '../../store/hooks/useAppDispath';
-import { socketReducer } from '../../store';
-
+import { connectSocket, disconnectedSocket } from '../../store/reducers/socket';
+import { useDispatch } from 'react-redux';
 
 const OrderMain = () => {
-    const { connect, disconnect } = useActions();
-    const dispatch = useAppDispatch();
+    console.log('order main')
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        connect();
-        console.log('connect');
+        dispatch(connectSocket());
+        console.log('comp: conncet')
 
         return () => {
-            disconnect()
-        }
-    }, [])
-
-    useEffect(() => {
-        const socket = socketReducer.socket;
-
-        if(socket) {
-            socket.onmessage = (event) => {
-                console.log(event.data)
-            }
-        }
-
-        return () => {
-            if(socket) {
-                socket.onmessage = null
-            }
+            dispatch(disconnectedSocket())
         }
     }, [dispatch])
 

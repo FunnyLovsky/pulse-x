@@ -10,7 +10,7 @@ const Ticker = () => {
                     <option value="2">EUR / RUB</option>
                     <option value="3">USD / RUB</option>
                 </select>
-                <input type="text" value={1}/>
+                <input type="text" />
                 <div className={styles.item}>
                     <div className={styles.price}>8.20</div>
                     <button>Buy</button>
