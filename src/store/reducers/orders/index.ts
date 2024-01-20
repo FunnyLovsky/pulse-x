@@ -21,7 +21,7 @@ const ordersReducer = createSlice({
         },
 
         addOrders(state, action: PayloadAction<IOrder[]>) {
-            state.orders.push(...action.payload);
+            state.orders = action.payload;
         },
 
         setOrder(state, action: PayloadAction<IChangeOrder>) {
@@ -30,6 +30,12 @@ const ordersReducer = createSlice({
                     ? { ...order, status: action.payload.status, change: action.payload.change }
                     : order
             );
+        },
+
+        deleteOrder(state, action: PayloadAction<IActiveOrder>) {
+            state.orders = state.orders.filter(order => 
+                order.id !== action.payload.id
+            )
         },
 
         placeActiveOrder(state, action: PayloadAction<IActiveOrder>) {
@@ -43,11 +49,19 @@ const ordersReducer = createSlice({
         },
 
         addActiveOrders(state, action: PayloadAction<IActiveOrder[]>) {
-            state.activeOrders.push(...action.payload);
+            state.activeOrders = action.payload;
         },
     }
 })
 
-export const {placeActiveOrder, addOrders, cancelActiveOrder, placeOrder, setOrder, addActiveOrders} = ordersReducer.actions
+export const {
+    placeActiveOrder, 
+    addOrders, 
+    cancelActiveOrder, 
+    placeOrder, 
+    setOrder, 
+    addActiveOrders,
+    deleteOrder
+} = ordersReducer.actions
 
 export default ordersReducer.reducer

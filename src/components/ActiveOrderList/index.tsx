@@ -16,12 +16,17 @@ const ActiveOrderList = () => {
         <div className={styles.inner}>
             <h2 className={styles.title}>Активне заявки</h2>
 
-            {activeOrders.map(order => 
-                <div className={styles.item} key={order.id}>
-                    <p>#{order.id}</p>
-                    <button onClick={() => cancelHandler(order.id)}>Cancel</button>
-                </div>
-            )}
+            {activeOrders.length > 0 
+                ?
+                activeOrders.map(order => 
+                    <div className={styles.item} key={order.id}>
+                        <p>#{order.id}</p>
+                        <button onClick={() => cancelHandler(order.id)}>Cancel</button>
+                    </div>
+                )
+                :
+                <p className={styles.cap}>У вас нет активных заявок</p>
+            }
         </div>
     )
 };

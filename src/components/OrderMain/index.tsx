@@ -8,10 +8,12 @@ import { useActions } from '../../store/hooks/useActions';
 import { useAppSelector } from '../../store/hooks/useAppSelector';
 
 const OrderMain = () => {
-    const {connect, disconnect} = useActions()
+    const {connect, disconnect, fetchOrders} = useActions()
     const {isConnected, isLoading} = useAppSelector(state => state.socketReducer)
 
     useEffect(() => {
+        fetchOrders();
+        
         return () => {
             disconnect()
         }

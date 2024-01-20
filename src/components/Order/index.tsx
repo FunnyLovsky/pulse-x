@@ -7,6 +7,8 @@ import { formatInstrument } from '../../utils/formatInstrument';
 import ARROWS from '../../assets/arrows.svg';
 import { formatNumber } from '../../utils/formatNumber';
 import { IOrder } from '../../Models/IOrder';
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { useActions } from '../../store/hooks/useActions';
 
 
 const Order: FC<IOrder> = ({id, create, change, status, side, amount, instrument, price}) => {
@@ -16,6 +18,8 @@ const Order: FC<IOrder> = ({id, create, change, status, side, amount, instrument
     const styleStatus = [styles.status, styles[orderStatus!]].join(' ');
     const orderSide = getSide(side);
     const [firsIn, secondIn] = formatInstrument(instrument);
+
+    const {clearOrder} = useActions()
 
     return(
         <div className={styles.order}>
@@ -62,6 +66,13 @@ const Order: FC<IOrder> = ({id, create, change, status, side, amount, instrument
                     <span>{secondIn}</span>
                 </p>
             </div>
+
+            <button 
+                className={styles.del}
+                onClick={() => clearOrder(id)}
+            >
+                <RiDeleteBin6Line/>
+            </button>
         </div>
     )
 };

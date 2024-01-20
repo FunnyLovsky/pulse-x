@@ -1,8 +1,9 @@
 @import '../../styles/variables.scss';
 
 .order {
+    position: relative;
     margin-top: 10px;
-    padding: 10px 2px;
+    padding: 10px 50px 10px 10px;
     display: flex;
     justify-content: flex-start;
     font-weight: 600;
@@ -12,9 +13,41 @@
     color: $white;
     width: 100%;
     border-radius: 10px;
+    transition: .3s;
 
     &:hover {
         background: $bg_color;
+    }
+
+    &:hover .del {
+        opacity: 1;
+    }
+}
+
+.del {
+    position: absolute;
+    opacity: 0;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: .3s;
+    border: none;
+    outline: none;
+    background: none;
+    color: $red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    transition: .3s;
+
+    &:hover {
+        color: darken($color: $red, $amount: 20px);
+        cursor: pointer;
+    }
+
+    &:active {
+        font-size: 10px;
     }
 }
 
@@ -105,3 +138,4 @@
         width: 15px;
     }
 }
+

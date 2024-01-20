@@ -1,5 +1,5 @@
-import { cancelActiveOrder, placeActiveOrder, placeOrder, setOrder } from ".";
-import { AppDispatch } from "../..";
+import { addActiveOrders, addOrders, cancelActiveOrder, deleteOrder, placeActiveOrder, placeOrder, setOrder } from ".";
+import { AppDispatch, RootState } from "../..";
 import { IChangeOrder, IOrder } from "../../../Models/IOrder";
 import { OrderStatus } from "../../../api/Enums";
 
@@ -24,13 +24,18 @@ const createOrder = (obj: Order) => async (dispatch: AppDispatch) => {
         }
 
         dispatch(placeOrder(order));
-        dispatch(placeActiveOrder({id: order.id}))
+        dispatch(placeActiveOrder({id: order.id}));
+
+        const orders = localStorage.getItem('orders') || '[]'
+        const json: IOrder[] = JSON.parse(orders)
+        json.push(order)
+        localStorage.setItem('orders', JSON.stringify(json));
     } catch (error: any) {
         console.log(error.message)
     }
 }
 
-const cancelOrder = (id: string) => async (dispatch: AppDispatch) => {
+const cancelOrder = (id: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
         const cancelledOrder: IChangeOrder= {
             id,
@@ -38,7 +43,37 @@ const cancelOrder = (id: string) => async (dispatch: AppDispatch) => {
             status: OrderStatus.cancelled
         }
         dispatch(cancelActiveOrder({id}))
-        dispatch(setOrder(cancelledOrder))
+        dispatch(setOrder(cancelledOrder));
+        
+        const orders = getState().ordersReducer.orders;
+        localStorage.setItem('orders', JSON.stringify(orders))
+    } catch (error) {
+        
+    }
+}
+
+const clearOrder = (id: string) => async (dispatch: AppDispatch) => {
+    try {
+        dispatch(deleteOrder({id}))
+        dispatch(cancelActiveOrder({id}));
+
+        const orders = localStorage.getItem('orders') || '[]'
+        const json: IOrder[] = JSON.parse(orders)
+        const clear = json.filter(order => order.id !== id)
+        localStorage.setItem('orders', JSON.stringify(clear));
+    } catch (error) {
+        
+    }
+}
+
+const fetchOrders = () => async (dispatch: AppDispatch) => {
+    try {
+        const orders = localStorage.getItem('orders') || '[]'
+        const json: IOrder[] = JSON.parse(orders);
+        dispatch(addOrders(json));
+
+        const active = json.filter(order => order.status === OrderStatus.active)
+        dispatch(addActiveOrders(active))
     } catch (error) {
         
     }
@@ -46,5 +81,7 @@ const cancelOrder = (id: string) => async (dispatch: AppDispatch) => {
 
 export const OrderActionCreators = {
     createOrder,
-    cancelOrder
+    cancelOrder,
+    clearOrder,
+    fetchOrders
 }

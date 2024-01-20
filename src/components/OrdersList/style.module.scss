@@ -2,7 +2,7 @@
 
 .inner {
     background: $bg_elem;
-    padding: 20px 25px 30px;
+    padding: 20px 20px 30px;
     border-radius: 20px;
     display: flex;
     width: 75%;
@@ -12,6 +12,7 @@
 
 .title {
     width: 100%;
+    padding: 0 5px;
     display: flex;
     font-size: 18px;
     font-style: normal;
@@ -23,6 +24,7 @@
 
 .header {
     display: flex;
+    padding: 10px 50px 10px 10px;
     justify-content: space-between;
     width: 100%;
     color: #9A9A9A;
@@ -62,16 +64,7 @@
     }
 }
 
-.order {
+.list {
     width: 100%;
-    margin: 20px 0;
-    display: flex;
-    justify-content: space-between;
-    font-weight: 600;
-    font-size: 12px;
-    font-style: normal;
-    line-height: normal;
-    color: $white;
 }
-
 
