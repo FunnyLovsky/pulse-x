@@ -7,7 +7,6 @@ import { useAppSelector } from './store/hooks/useAppSelector';
 import { useActions } from './store/hooks/useActions';
 
 const App = () => {
-    console.log('render APP')
     const {checkLogin} = useActions()
     const {isAuthLoading} = useAppSelector(state => state.authReducer)
 

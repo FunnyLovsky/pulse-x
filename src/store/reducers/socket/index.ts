@@ -4,14 +4,16 @@ interface SocketState {
     error: null | string,
     isLoading: boolean,
     isConnected: boolean,
-    message: {} | null
+    message: {} | null,
+    reconnecting: boolean
 }
 
 const initialState: SocketState = {
     error: null,
     isLoading: false,
     isConnected: false,
-    message: {}
+    message: {},
+    reconnecting: true
 }
 
 const socketReducer = createSlice({
@@ -44,9 +46,23 @@ const socketReducer = createSlice({
 
         sendMessage(state, action: PayloadAction<{}>) {
             state.message = action.payload
-        }
+        },
+
+        setReconnecting(state, action: PayloadAction<boolean>) {
+            state.reconnecting = action.payload
+        }   
     }
 })
 
-export const {setError, disconnectedSocket, sendMessage, connectSocket, connected, disconnected, connecting} = socketReducer.actions
+export const {
+    setError, 
+    disconnectedSocket, 
+    sendMessage, 
+    connectSocket, 
+    connected, 
+    disconnected, 
+    connecting,
+    setReconnecting
+} = socketReducer.actions
+
 export default socketReducer.reducer

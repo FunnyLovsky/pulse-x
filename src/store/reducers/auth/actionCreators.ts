@@ -2,6 +2,7 @@ import { setError, setIsAuth, setUser, setIsAuthLoading, setIsLoading } from "."
 import { AppDispatch } from "../.."
 import { IUser } from "../../../Models/IUser";
 import AuthService from "../../../api/AuthService";
+import { connectSocket, connecting, setReconnecting } from "../socket";
 
 const login = (username: string, password: string) => async (dispath: AppDispatch) =>{
     try {
@@ -16,6 +17,9 @@ const login = (username: string, password: string) => async (dispath: AppDispatc
             localStorage.setItem('username', user.username)
             dispath(setUser(user))
             dispath(setIsAuth(true))
+
+            dispath(connecting())
+            dispath(connectSocket());
         } else {
             dispath(setError('Некоректный логин или пароль'))
         }
@@ -36,6 +40,7 @@ const logout = () => async (dispatch: AppDispatch) => {
     dispatch(setUser({} as IUser));
     dispatch(setIsAuth(false));
     dispatch(setIsAuthLoading(false));
+    dispatch(setReconnecting(false));
 }
 
 const checkLogin = () => async (dispatch: AppDispatch) => {
@@ -44,6 +49,9 @@ const checkLogin = () => async (dispatch: AppDispatch) => {
     if(localStorage.getItem('auth')) {
         dispatch(setUser({username: localStorage.getItem('username')} as IUser))
         dispatch(setIsAuth(true));
+
+        dispatch(connecting())
+        dispatch(connectSocket());
     }
     dispatch(setIsAuthLoading(false));
 }

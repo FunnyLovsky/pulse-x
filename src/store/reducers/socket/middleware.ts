@@ -1,36 +1,45 @@
-import { Middleware } from "@reduxjs/toolkit";
-import { connectSocket, disconnectedSocket, sendMessage, setError, connected, disconnected} from ".";
+import { Dispatch, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
+import { connectSocket, disconnectedSocket, sendMessage, setError, connected, disconnected, connecting} from ".";
 
 export const socketMiddleware = (url: string): Middleware => {
-    console.log('middleware')
     let socket: WebSocket | null = null;
 
-    return (store) => (next) => (action: any) => {
-        switch (action.type) {
+    return (store: MiddlewareAPI<Dispatch>) => (next) => (action: any) => {
+        const { dispatch, getState } = store;
+        const { type } = action;
+
+        switch (type) {
+
             case connectSocket.type:
                 if (!socket || socket.readyState === WebSocket.CLOSED) {
-                    console.log('create socket');
-                    socket = new WebSocket(url);
 
+                    socket = new WebSocket(url);
+                    console.log('socket connecting...')
                     socket.onopen = () => {
-                        console.log('open');
-                        store.dispatch(connected());
+                        console.log('socket open');
+                        dispatch(connected());
                     }
 
                     socket.onclose = () => {
-                        console.log('close');
-                        store.dispatch(disconnected());
-                        socket = null
+                        console.log('socket close');
+
+                        if(getState().socketReducer.reconnecting) {
+                            dispatch(connecting());
+                            dispatch(connectSocket());
+                        } else {
+                            dispatch(disconnected());
+                            socket = null;
+                        }
                     }
 
                     socket.onerror = (error: any) => {
-                        console.log('error');
-                        store.dispatch(disconnected());
+                        console.log('socket error: ', error);
+                        dispatch(disconnected());
                         socket = null
                     }
 
                     socket.onmessage = (event) => {
-                        console.log('message:', event.data);
+                        console.log('socket message:', event.data);
                     }
                 }
                 break;
@@ -49,7 +58,7 @@ export const socketMiddleware = (url: string): Middleware => {
                         socket.send(action.payload);
                     }
                 } catch (error: any) {
-                    store.dispatch(setError(error.message));
+                    dispatch(setError(error.message));
                 }
                 break;
 

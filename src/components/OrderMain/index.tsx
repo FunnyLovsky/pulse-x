@@ -9,15 +9,22 @@ import { useAppSelector } from '../../store/hooks/useAppSelector';
 
 const OrderMain = () => {
     const {connect, disconnect} = useActions()
-    const {isConnected} = useAppSelector(state => state.socketReducer)
+    const {isConnected, isLoading} = useAppSelector(state => state.socketReducer)
 
     useEffect(() => {
-        connect()
-
         return () => {
             disconnect()
         }
     }, [])
+
+    if(isLoading) {
+        return(
+            <Container>
+                <h1>Data is loading...</h1>
+            </Container>
+        )
+    }
+    
 
     return (
         <Container>
@@ -28,7 +35,7 @@ const OrderMain = () => {
                 </div>
             ) : (
                 <>
-                    <h1>Data is loading...</h1>
+                    <h1>Connecting is close.</h1>
                     <button onClick={connect}>Connect</button>
                 </>
             )}
