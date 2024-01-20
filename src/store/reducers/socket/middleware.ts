@@ -1,5 +1,5 @@
 import { Dispatch, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
-import { connectSocket, disconnectedSocket, sendMessage, setError, connected, disconnected, connecting} from ".";
+import { connectSocket, disconnectedSocket, sendMessage, setError, connected, disconnected } from ".";
 
 export const socketMiddleware = (url: string): Middleware => {
     let socket: WebSocket | null = null;
@@ -24,7 +24,6 @@ export const socketMiddleware = (url: string): Middleware => {
                         console.log('socket close');
 
                         if(getState().socketReducer.reconnecting) {
-                            dispatch(connecting());
                             dispatch(connectSocket());
                         } else {
                             dispatch(disconnected());

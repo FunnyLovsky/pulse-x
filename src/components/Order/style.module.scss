@@ -1,7 +1,8 @@
 @import '../../styles/variables.scss';
 
 .order {
-    margin-top: 20px ;
+    margin-top: 10px;
+    padding: 10px 2px;
     display: flex;
     justify-content: flex-start;
     font-weight: 600;
@@ -10,6 +11,11 @@
     line-height: normal;
     color: $white;
     width: 100%;
+    border-radius: 10px;
+
+    &:hover {
+        background: $bg_color;
+    }
 }
 
 .item {
@@ -76,12 +82,12 @@
 }
 
 .Buy {
-    color: #FF2D2E;
+    color: #00C287;
     font-weight: 400;
 }
 
 .Sell {
-    color: #00C287;
+    color: #FF2D2E;
     font-weight: 400;
 }
 

@@ -20,6 +20,7 @@ const login = (username: string, password: string) => async (dispath: AppDispatc
 
             dispath(connecting())
             dispath(connectSocket());
+            dispath(setReconnecting(true));
         } else {
             dispath(setError('Некоректный логин или пароль'))
         }
@@ -40,6 +41,7 @@ const logout = () => async (dispatch: AppDispatch) => {
     dispatch(setUser({} as IUser));
     dispatch(setIsAuth(false));
     dispatch(setIsAuthLoading(false));
+    
     dispatch(setReconnecting(false));
 }
 

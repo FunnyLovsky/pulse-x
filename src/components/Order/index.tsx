@@ -6,17 +6,8 @@ import { getSide } from './utils/getSide';
 import { formatInstrument } from '../../utils/formatInstrument';
 import ARROWS from '../../assets/arrows.svg';
 import { formatNumber } from '../../utils/formatNumber';
+import { IOrder } from '../../Models/IOrder';
 
-interface IOrder {
-    id: string,
-    create: number,
-    change: number,
-    status: number,
-    side: number,
-    price: number,
-    amount: number,
-    instrument: number,
-}
 
 const Order: FC<IOrder> = ({id, create, change, status, side, amount, instrument, price}) => {
     const [createDate, createTime] = formatDate(create);
