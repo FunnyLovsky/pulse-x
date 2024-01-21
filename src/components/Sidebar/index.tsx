@@ -6,7 +6,12 @@ import { IoReorderFour, IoLogOutOutline } from "react-icons/io5";
 import { useActions } from '../../store/hooks/useActions';
 
 const Sidebar = () => {
-    const {logout} = useActions()
+    const {logout, disconnect} = useActions()
+
+    const logoutHandler = () => {
+        logout()
+        disconnect()
+    }
     
     return(
         <div className={styles.inner}>
@@ -24,7 +29,7 @@ const Sidebar = () => {
 
             <button 
                 className={styles.btn}
-                onClick={logout}
+                onClick={logoutHandler}
             >
                 <IoLogOutOutline/>
                 <p>Выход</p>

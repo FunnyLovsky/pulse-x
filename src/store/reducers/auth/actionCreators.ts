@@ -18,9 +18,9 @@ const login = (username: string, password: string) => async (dispath: AppDispatc
             dispath(setUser(user))
             dispath(setIsAuth(true))
 
+            dispath(setReconnecting(true));
             dispath(connecting())
             dispath(connectSocket());
-            dispath(setReconnecting(true));
         } else {
             dispath(setError('Некоректный логин или пароль'))
         }
@@ -34,6 +34,7 @@ const login = (username: string, password: string) => async (dispath: AppDispatc
 
 const logout = () => async (dispatch: AppDispatch) => {
     dispatch(setIsAuthLoading(true));
+    dispatch(setReconnecting(false));
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     localStorage.removeItem('auth')
@@ -42,7 +43,7 @@ const logout = () => async (dispatch: AppDispatch) => {
     dispatch(setIsAuth(false));
     dispatch(setIsAuthLoading(false));
     
-    dispatch(setReconnecting(false));
+
 }
 
 const checkLogin = () => async (dispatch: AppDispatch) => {

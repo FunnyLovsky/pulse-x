@@ -1,6 +1,7 @@
 import { addActiveOrders, addOrders, cancelActiveOrder, deleteOrder, placeActiveOrder, placeOrder, setOrder } from ".";
 import { AppDispatch, RootState } from "../..";
 import { IChangeOrder, IOrder } from "../../../Models/IOrder";
+import { DBService } from "../../../api/DBService";
 import { OrderStatus } from "../../../api/Enums";
 
 interface Order {
@@ -26,10 +27,7 @@ const createOrder = (obj: Order) => async (dispatch: AppDispatch) => {
         dispatch(placeOrder(order));
         dispatch(placeActiveOrder({id: order.id}));
 
-        const orders = localStorage.getItem('orders') || '[]'
-        const json: IOrder[] = JSON.parse(orders)
-        json.push(order)
-        localStorage.setItem('orders', JSON.stringify(json));
+        await DBService.createOrder(order);
     } catch (error: any) {
         console.log(error.message)
     }
@@ -46,9 +44,9 @@ const cancelOrder = (id: string) => async (dispatch: AppDispatch, getState: () =
         dispatch(setOrder(cancelledOrder));
         
         const orders = getState().ordersReducer.orders;
-        localStorage.setItem('orders', JSON.stringify(orders))
-    } catch (error) {
-        
+        await DBService.changeOrder(orders);
+    } catch (error: any) {
+        console.log(error.message)
     }
 }
 
@@ -57,25 +55,21 @@ const clearOrder = (id: string) => async (dispatch: AppDispatch) => {
         dispatch(deleteOrder({id}))
         dispatch(cancelActiveOrder({id}));
 
-        const orders = localStorage.getItem('orders') || '[]'
-        const json: IOrder[] = JSON.parse(orders)
-        const clear = json.filter(order => order.id !== id)
-        localStorage.setItem('orders', JSON.stringify(clear));
-    } catch (error) {
-        
+        await DBService.deleteOrder(id)
+    } catch (error: any) {
+        console.log(error.message)
     }
 }
 
 const fetchOrders = () => async (dispatch: AppDispatch) => {
     try {
-        const orders = localStorage.getItem('orders') || '[]'
-        const json: IOrder[] = JSON.parse(orders);
-        dispatch(addOrders(json));
-
-        const active = json.filter(order => order.status === OrderStatus.active)
-        dispatch(addActiveOrders(active))
-    } catch (error) {
+        const json = await DBService.fetchOrders()
+        const active = json.filter(order => order.status === OrderStatus.active);
         
+        dispatch(addActiveOrders(active));
+        dispatch(addOrders(json));
+    } catch (error: any) {
+        console.log(error.message)
     }
 }
 

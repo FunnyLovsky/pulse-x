@@ -1,8 +1,10 @@
 import { Dispatch, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
-import { connectSocket, disconnectedSocket, sendMessage, setError, connected, disconnected } from ".";
+import { connectSocket, disconnectedSocket, sendMessage, setError, connected, disconnected, connecting } from ".";
+import { IWSServer } from "../../../server/IWSServer";
+import { WSServer } from "../../../server/WSServer";
 
 export const socketMiddleware = (url: string): Middleware => {
-    let socket: WebSocket | null = null;
+    let socket: IWSServer | null = null;
 
     return (store: MiddlewareAPI<Dispatch>) => (next) => (action: any) => {
         const { dispatch, getState } = store;
@@ -13,7 +15,7 @@ export const socketMiddleware = (url: string): Middleware => {
             case connectSocket.type:
                 if (!socket || socket.readyState === WebSocket.CLOSED) {
 
-                    socket = new WebSocket(url);
+                    socket = new WSServer(url);
                     console.log('socket connecting...')
                     socket.onopen = () => {
                         console.log('socket open');
@@ -24,6 +26,7 @@ export const socketMiddleware = (url: string): Middleware => {
                         console.log('socket close');
 
                         if(getState().socketReducer.reconnecting) {
+                            dispatch(connecting())
                             dispatch(connectSocket());
                         } else {
                             dispatch(disconnected());
