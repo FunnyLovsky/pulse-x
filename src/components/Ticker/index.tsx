@@ -2,29 +2,29 @@ import { useState } from 'react';
 import { useActions } from '../../store/hooks/useActions';
 import styles from './style.module.scss';
 import ActiveOrderList from '../ActiveOrderList';
-import { ClientMessageType, OrderSide } from '../../api/Enums';
+import { OrderSide } from '../../api/Enums';
 import { formatNumber } from '../../utils/formatNumber';
 import { useSetAmount } from './hooks/useSetAmount';
+import { useAppSelector } from '../../store/hooks/useAppSelector';
 
 
 const Ticker = () => {
     const {amount, setAmount, setInputAmount} = useSetAmount('10')
     const [instrument, setInstrument] = useState('');
-    const priceBuy = 8.34;
-    const priceSell = 3.44
+    const {subscriptionId, bid, offer} = useAppSelector(state => state.marketReducer)
+    const priceBuy = bid;
+    const priceSell = offer
 
-    const { send, createOrder } = useActions()
+    const { createOrder, subscribe, unsubscribe } = useActions()
 
     const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setInstrument(e.target.value)
+        setInstrument(e.target.value);
 
-        send({
-            messageType: ClientMessageType.subscribeMarketData,
-            message: {
-                instrument: e.target.value
-            }
-        })
-       
+        if(subscriptionId) {
+            unsubscribe(subscriptionId)
+        }
+
+        subscribe(+e.target.value);
     }
     
     const placeOrder = (side: number, price: number) => {
@@ -35,15 +35,6 @@ const Ticker = () => {
             instrument: Number(instrument)
         }
         createOrder(order);
-        send({
-            messageType: ClientMessageType.placeOrder,
-            message: {
-                amount: amount.replace(/\s/g, ''),
-                instrument: instrument,
-                price,
-                side
-            }
-        })
         setInstrument('');
         setAmount('10')
     }

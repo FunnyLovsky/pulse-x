@@ -1,14 +1,24 @@
-import { Dispatch, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
+import {  Middleware} from "@reduxjs/toolkit";
 import { connectSocket, disconnectedSocket, sendMessage, connected, disconnected, connecting } from ".";
 import { IWSServer } from "../../../server/types/type";
 import { WSServer } from "../../../server/WSServer";
-import { ServerEnvelope } from "../../../Models/ServerMessages";
+import { ExecutionReport, MarketDataUpdate, ServerEnvelope, SuccessInfo } from "../../../Models/ServerMessages";
 import { ServerMessageType } from "../../../api/Enums";
+import { setPrice, succesSub } from "../market";
+import { AppDispatch, RootState } from "../..";
+import { cancelActiveOrder, setOrder } from "../orders";
+import { IChangeOrder } from "../../../Models/IOrder";
+import { DBService } from "../../../api/DBService";
 
-export const socketMiddleware = (url: string): Middleware => {
+interface StoreApi {
+    dispatch: AppDispatch;
+    getState: () => RootState;
+  }
+
+export const socketMiddleware = (url: string): Middleware<StoreApi> => {
     let socket: IWSServer | null = null;
 
-    return (store: MiddlewareAPI<Dispatch>) => (next) => (action: any) => {
+    return (store) => (next) => (action: any) => {
         const { dispatch, getState } = store;
         const { type } = action;
 
@@ -49,6 +59,9 @@ export const socketMiddleware = (url: string): Middleware => {
                         switch (data.messageType) {
                             case ServerMessageType.success:
                                 console.log('succes:', data.message);
+                                
+                                const message = data.message as SuccessInfo
+                                dispatch(succesSub(message.subscriptionId))
                                 break;
 
                             case ServerMessageType.error:
@@ -58,10 +71,24 @@ export const socketMiddleware = (url: string): Middleware => {
                             
                             case ServerMessageType.executionReport:
                                 console.log('executionReport:', data.message);
+                                const order = data.message as ExecutionReport
+                                const orderCh: IChangeOrder = {
+                                    id: order.orderId,
+                                    change: Date.now(),
+                                    status: order.orderStatus,
+                                }
+                                dispatch(cancelActiveOrder({id: order.orderId}))
+                                dispatch(setOrder(orderCh));
+                                
+                                const orders = getState().ordersReducer.orders;
+                                DBService.changeOrder(orders);
                                 break;
 
                             case ServerMessageType.marketDataUpdate:
                                 console.log('marketDataUpdate:', data.message);
+
+                                const marketData = data.message as MarketDataUpdate
+                                dispatch(setPrice(marketData.quotes[0]))
                                 break;
                         
                             default:

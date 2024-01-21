@@ -1,8 +1,11 @@
+
 import { addActiveOrders, addOrders, cancelActiveOrder, deleteOrder, placeActiveOrder, placeOrder, setOrder } from ".";
 import { AppDispatch, RootState } from "../..";
 import { IChangeOrder, IOrder } from "../../../Models/IOrder";
 import { DBService } from "../../../api/DBService";
 import { OrderStatus } from "../../../api/Enums";
+import { DtoOrder } from "../../../dto/DtoOrder";
+import { sendMessage } from "../socket";
 
 interface Order {
     side: number, 
@@ -23,7 +26,7 @@ const createOrder = (obj: Order) => async (dispatch: AppDispatch) => {
             amount: obj.amount,
             instrument: obj.instrument
         }
-
+        dispatch(sendMessage(DtoOrder(order)))
         dispatch(placeOrder(order));
         dispatch(placeActiveOrder({id: order.id}));
 
@@ -33,15 +36,15 @@ const createOrder = (obj: Order) => async (dispatch: AppDispatch) => {
     }
 }
 
-const cancelOrder = (id: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
+export const changeStatusOrder = (id: string, status: OrderStatus) => async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
-        const cancelledOrder: IChangeOrder= {
+        const order: IChangeOrder= {
             id,
             change: Date.now(),
-            status: OrderStatus.cancelled
+            status,
         }
         dispatch(cancelActiveOrder({id}))
-        dispatch(setOrder(cancelledOrder));
+        dispatch(setOrder(order));
         
         const orders = getState().ordersReducer.orders;
         await DBService.changeOrder(orders);
@@ -49,6 +52,7 @@ const cancelOrder = (id: string) => async (dispatch: AppDispatch, getState: () =
         console.log(error.message)
     }
 }
+
 
 const clearOrder = (id: string) => async (dispatch: AppDispatch) => {
     try {
@@ -75,7 +79,7 @@ const fetchOrders = () => async (dispatch: AppDispatch) => {
 
 export const OrderActionCreators = {
     createOrder,
-    cancelOrder,
+    changeStatusOrder,
     clearOrder,
     fetchOrders
 }

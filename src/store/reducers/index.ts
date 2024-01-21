@@ -2,9 +2,11 @@
 import authReducer from "./auth"
 import socketReducer from "./socket"
 import ordersReducer from './orders'
+import marketReducer from "./market"
 
 export default {
     authReducer,
     socketReducer,
-    ordersReducer
+    ordersReducer,
+    marketReducer
 }

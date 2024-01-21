@@ -1,14 +1,15 @@
+import { OrderStatus } from '../../api/Enums';
 import { useActions } from '../../store/hooks/useActions';
 import { useAppSelector } from '../../store/hooks/useAppSelector';
 import styles from './style.module.scss';
 
 const ActiveOrderList = () => {
 
-    const { cancelOrder } = useActions()
+    const { changeStatusOrder } = useActions()
     const { activeOrders } = useAppSelector(state => state.ordersReducer);
 
     const cancelHandler = (id: string) => {
-        cancelOrder(id)
+        changeStatusOrder(id, OrderStatus.cancelled)
 
     }
 
