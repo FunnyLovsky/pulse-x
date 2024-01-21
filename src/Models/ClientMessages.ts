@@ -24,3 +24,4 @@ export interface PlaceOrder extends ClientMessage {
     amount: Decimal
     price: Decimal
 }
+

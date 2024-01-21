@@ -1,5 +1,6 @@
 import {  disconnectedSocket, sendMessage, connectSocket, connecting} from "."
 import { AppDispatch } from "../.."
+import { ClientEnvelope } from "../../../Models/ClientMessages";
 
 
 const connect = () => async (dispath: AppDispatch) => {
@@ -7,7 +8,7 @@ const connect = () => async (dispath: AppDispatch) => {
     dispath(connectSocket());
 }
 
-const send = (data: any) => async (dispatch: AppDispatch) => {
+const send = (data: ClientEnvelope) => async (dispatch: AppDispatch) => {
     dispatch(sendMessage(data))
 };
 

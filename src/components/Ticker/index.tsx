@@ -2,38 +2,30 @@ import { useState } from 'react';
 import { useActions } from '../../store/hooks/useActions';
 import styles from './style.module.scss';
 import ActiveOrderList from '../ActiveOrderList';
-import { OrderSide } from '../../api/Enums';
+import { ClientMessageType, OrderSide } from '../../api/Enums';
 import { formatNumber } from '../../utils/formatNumber';
+import { useSetAmount } from './hooks/useSetAmount';
 
 const Ticker = () => {
-    const [amount, setAmount] = useState('10')
+    const {amount, setAmount, setInputAmount} = useSetAmount('10')
     const [instrument, setInstrument] = useState('');
     const priceBuy = 8.34;
     const priceSell = 3.44
 
     const { send, createOrder } = useActions()
 
-    const reset = () => {
-        setInstrument('');
-        setAmount('10')
-    }
-
     const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        if(instrument) {
-            // получение котировок
-        }
-
         setInstrument(e.target.value)
+
+        send({
+            messageType: ClientMessageType.subscribeMarketData,
+            message: {
+                instrument: e.target.value
+            }
+        })
+       
     }
-
-    const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const inputValue = e.target.value.replace(/\s/g, '');
-
-        if(!isNaN(+inputValue)) {
-            setAmount(inputValue.replace(/\B(?=(\d{3})+(?!\d))/g, ' '));
-        }  
-    }
-
+    
     const placeOrder = (side: number, price: number) => {
         const order = {
             side,
@@ -42,8 +34,9 @@ const Ticker = () => {
             instrument: Number(instrument)
         }
         createOrder(order);
-        send(order)
-        reset()
+
+        setInstrument('');
+        setAmount('10')
     }
 
     const getPrice = (price: number) => {
@@ -66,7 +59,7 @@ const Ticker = () => {
                 <input 
                     type='text' 
                     value={amount} 
-                    onChange={inputHandler}
+                    onChange={setInputAmount}
                     placeholder='Введите объем'
                 />
 

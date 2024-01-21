@@ -1,6 +1,6 @@
 import { Dispatch, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
 import { connectSocket, disconnectedSocket, sendMessage, setError, connected, disconnected, connecting } from ".";
-import { IWSServer } from "../../../server/IWSServer";
+import { IWSServer } from "../../../server/types/type";
 import { WSServer } from "../../../server/WSServer";
 
 export const socketMiddleware = (url: string): Middleware => {
@@ -41,7 +41,7 @@ export const socketMiddleware = (url: string): Middleware => {
                     }
 
                     socket.onmessage = (event) => {
-                        console.log('socket message:', event.data);
+                        console.log('socket message:', event);
                     }
                 }
                 break;

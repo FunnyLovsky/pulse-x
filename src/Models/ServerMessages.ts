@@ -14,7 +14,7 @@ export interface ErrorInfo extends ServerMessage {
 }
 
 export interface SuccessInfo extends ServerMessage {
-
+    subscriptionId: string
 }
 
 export interface ExecutionReport extends ServerMessage {

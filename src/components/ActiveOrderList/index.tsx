@@ -4,12 +4,12 @@ import styles from './style.module.scss';
 
 const ActiveOrderList = () => {
 
-    const { send, cancelOrder } = useActions()
+    const { cancelOrder } = useActions()
     const { activeOrders } = useAppSelector(state => state.ordersReducer);
 
     const cancelHandler = (id: string) => {
         cancelOrder(id)
-        send({id})
+
     }
 
     return(
