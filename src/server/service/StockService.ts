@@ -1,7 +1,9 @@
 
 import { Quote } from "../../Models/Base";
-import { ErrorInfo, MarketDataUpdate, ServerEnvelope, SuccessInfo } from "../../Models/ServerMessages";
-import { Instrument, ServerMessageType } from "../../api/Enums";
+import { PlaceOrder, SubscribeMarketData, UnsubscribeMarketData } from "../../Models/ClientMessages";
+import { ErrorInfo, ExecutionReport, MarketDataUpdate, ServerEnvelope, SuccessInfo } from "../../Models/ServerMessages";
+import { Instrument, OrderStatus, ServerMessageType } from "../../api/Enums";
+import { valueGenerate } from "../utils/QuoteGenerate";
 import { UUIDGenerator } from "../utils/UUIDGenerate";
 
 class StockService {
@@ -13,8 +15,8 @@ class StockService {
         this.instrument = null
     }
 
-    subscribeMarketData(instrument: Instrument) {
-        this.instrument = instrument;
+    subscribeMarketData(message: SubscribeMarketData) {
+        this.instrument = message.instrument;
 
         if (Math.random() <= 0.15) {
             return {
@@ -37,11 +39,6 @@ class StockService {
     }
 
     marketDataUpdate() {
-
-        const generateValue = (min: number, max: number) => {
-            return Math.random() * (max - min) + min;
-        };
-        
         return {
             messageType: ServerMessageType.marketDataUpdate,
             message: {
@@ -49,11 +46,29 @@ class StockService {
                 instrument: this.instrument,
                 quotes: [
                     {
-                        bid: generateValue(2, 10),
-                        offer: generateValue(2, 10)
+                        bid: valueGenerate(2, 10),
+                        offer: valueGenerate(2, 10)
                     } as Quote
                 ] 
             } as MarketDataUpdate
+        } as ServerEnvelope
+    }
+
+    unsubscribeMarketData(message: UnsubscribeMarketData) {
+        if(message.subscriptionId === this.subscriptionId) {
+            this.subscriptionId = null;
+        }
+    }
+
+    placeOrder(message: PlaceOrder) {
+        const { orderId } = message;
+        const orderStatus = Math.random() >= 0.5 ? OrderStatus.filled : OrderStatus.rejected;
+        return {
+            messageType: ServerMessageType.executionReport,
+            message: {
+                orderId,
+                orderStatus
+            } as ExecutionReport
         } as ServerEnvelope
     }
 }

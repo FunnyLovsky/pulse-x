@@ -6,6 +6,7 @@ import { ClientMessageType, OrderSide } from '../../api/Enums';
 import { formatNumber } from '../../utils/formatNumber';
 import { useSetAmount } from './hooks/useSetAmount';
 
+
 const Ticker = () => {
     const {amount, setAmount, setInputAmount} = useSetAmount('10')
     const [instrument, setInstrument] = useState('');
@@ -34,7 +35,15 @@ const Ticker = () => {
             instrument: Number(instrument)
         }
         createOrder(order);
-
+        send({
+            messageType: ClientMessageType.placeOrder,
+            message: {
+                amount: amount.replace(/\s/g, ''),
+                instrument: instrument,
+                price,
+                side
+            }
+        })
         setInstrument('');
         setAmount('10')
     }

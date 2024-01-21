@@ -1,7 +1,9 @@
 import { Dispatch, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
-import { connectSocket, disconnectedSocket, sendMessage, setError, connected, disconnected, connecting } from ".";
+import { connectSocket, disconnectedSocket, sendMessage, connected, disconnected, connecting } from ".";
 import { IWSServer } from "../../../server/types/type";
 import { WSServer } from "../../../server/WSServer";
+import { ServerEnvelope } from "../../../Models/ServerMessages";
+import { ServerMessageType } from "../../../api/Enums";
 
 export const socketMiddleware = (url: string): Middleware => {
     let socket: IWSServer | null = null;
@@ -41,7 +43,31 @@ export const socketMiddleware = (url: string): Middleware => {
                     }
 
                     socket.onmessage = (event) => {
-                        console.log('socket message:', event);
+                        
+                        const data: ServerEnvelope = JSON.parse(event);
+
+                        switch (data.messageType) {
+                            case ServerMessageType.success:
+                                console.log('succes:', data.message);
+                                break;
+
+                            case ServerMessageType.error:
+                                console.log('error:', data.message);
+                                break;
+
+                            
+                            case ServerMessageType.executionReport:
+                                console.log('executionReport:', data.message);
+                                break;
+
+                            case ServerMessageType.marketDataUpdate:
+                                console.log('marketDataUpdate:', data.message);
+                                break;
+                        
+                            default:
+                                break;
+                        }
+                        
                     }
                 }
                 break;
@@ -54,14 +80,11 @@ export const socketMiddleware = (url: string): Middleware => {
                 break;
 
             case sendMessage.type:
-                try {
-                    if (socket && socket.readyState === WebSocket.OPEN) {
-                        console.log('user message:', action.payload)
-                        socket.send(action.payload);
-                    }
-                } catch (error: any) {
-                    dispatch(setError(error.message));
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    console.log('user message:', action.payload)
+                    socket.send(JSON.stringify(action.payload));
                 }
+
                 break;
 
             default:
