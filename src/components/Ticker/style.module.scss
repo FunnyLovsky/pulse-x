@@ -123,3 +123,40 @@ input {
     }
 }
 
+
+.loader_g {
+    width: 30px;
+    height: 30px;
+    border: 4px solid $green;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.loader_r {
+    width: 30px;
+    height: 30px;
+    border: 4px solid $red;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.disabled {
+    opacity: .5;
+    cursor: not-allowed !important ;
+}
+
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 

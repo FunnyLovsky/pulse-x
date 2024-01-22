@@ -3,7 +3,7 @@ import { addActiveOrders, addOrders, cancelActiveOrder, deleteOrder, placeActive
 import { AppDispatch, RootState } from "../..";
 import { IChangeOrder, IOrder } from "../../../Models/IOrder";
 import { DBService } from "../../../api/DBService";
-import { OrderStatus } from "../../../api/Enums";
+import { ClientMessageType, OrderStatus } from "../../../api/Enums";
 import { DtoOrder } from "../../../dto/DtoOrder";
 import { sendMessage } from "../socket";
 
@@ -43,7 +43,17 @@ export const changeStatusOrder = (id: string, status: OrderStatus) => async (dis
             change: Date.now(),
             status,
         }
-        dispatch(cancelActiveOrder({id}))
+
+        if(status === OrderStatus.cancelled) {
+            dispatch(cancelActiveOrder({id}));
+            dispatch(sendMessage({
+                messageType: ClientMessageType.cancelOrder,
+                message: {
+                    orderId: id
+                }
+            }))
+        }
+
         dispatch(setOrder(order));
         
         const orders = getState().ordersReducer.orders;

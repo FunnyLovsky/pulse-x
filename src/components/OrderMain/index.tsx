@@ -10,6 +10,7 @@ import { useAppSelector } from '../../store/hooks/useAppSelector';
 const OrderMain = () => {
     const {connect, fetchOrders} = useActions()
     const {isConnected, isLoading} = useAppSelector(state => state.socketReducer)
+    const {error} = useAppSelector(state => state.marketReducer)
 
     useEffect(() => {
         fetchOrders();
@@ -28,6 +29,8 @@ const OrderMain = () => {
         <Container>
             {isConnected ? (
                 <div className={styles.main}>
+                    {error && <div className={styles.error}>{error}</div>}
+
                     <OrderList />
                     <Ticker />
                 </div>

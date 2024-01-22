@@ -2,9 +2,9 @@ import {  Middleware} from "@reduxjs/toolkit";
 import { connectSocket, disconnectedSocket, sendMessage, connected, disconnected, connecting } from ".";
 import { IWSServer } from "../../../server/types/type";
 import { WSServer } from "../../../server/WSServer";
-import { ExecutionReport, MarketDataUpdate, ServerEnvelope, SuccessInfo } from "../../../Models/ServerMessages";
+import { ErrorInfo, ExecutionReport, MarketDataUpdate, ServerEnvelope, SuccessInfo } from "../../../Models/ServerMessages";
 import { ServerMessageType } from "../../../api/Enums";
-import { setPrice, succesSub } from "../market";
+import { setError, setIsLoading, setPrice, succesSub } from "../market";
 import { AppDispatch, RootState } from "../..";
 import { cancelActiveOrder, setOrder } from "../orders";
 import { IChangeOrder } from "../../../Models/IOrder";
@@ -66,11 +66,15 @@ export const socketMiddleware = (url: string): Middleware<StoreApi> => {
 
                             case ServerMessageType.error:
                                 console.log('error:', data.message);
+
+                                const error = data.message as ErrorInfo
+                                dispatch(setIsLoading(false));
+                                dispatch(setError(error.reason))
                                 break;
 
-                            
                             case ServerMessageType.executionReport:
                                 console.log('executionReport:', data.message);
+                                
                                 const order = data.message as ExecutionReport
                                 const orderCh: IChangeOrder = {
                                     id: order.orderId,

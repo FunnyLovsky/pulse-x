@@ -11,11 +11,10 @@ import { useAppSelector } from '../../store/hooks/useAppSelector';
 const Ticker = () => {
     const {amount, setAmount, setInputAmount} = useSetAmount('10')
     const [instrument, setInstrument] = useState('');
-    const {subscriptionId, bid, offer} = useAppSelector(state => state.marketReducer)
-    const priceBuy = bid;
-    const priceSell = offer
-
+    const {subscriptionId, bid, offer, isLoading, error} = useAppSelector(state => state.marketReducer);
     const { createOrder, subscribe, unsubscribe } = useActions()
+
+    const disabled = Boolean(error)
 
     const selectHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setInstrument(e.target.value);
@@ -61,17 +60,39 @@ const Ticker = () => {
                     value={amount} 
                     onChange={setInputAmount}
                     placeholder='Введите объем'
+                    disabled={disabled}
+                    className={disabled ? styles.disabled : undefined}
                 />
 
                 {instrument && (
                     <>
                         <div className={[styles.item, styles.buy].join(' ')}>
-                            <p>{getPrice(priceBuy)}</p>
-                            <button onClick={() => placeOrder(OrderSide.buy, priceBuy)}>Buy</button>
+                            <p 
+                                className={disabled ? styles.disabled : undefined}
+                            >
+                                {isLoading ? <span className={styles.loader_g}></span> : getPrice(bid)}
+                            </p>
+                            <button 
+                                onClick={() => placeOrder(OrderSide.buy, bid)}
+                                disabled={disabled || isLoading}
+                                className={disabled ? styles.disabled : undefined}
+                            >
+                                Buy
+                            </button>
                         </div>
                         <div className={[styles.item, styles.sell].join(' ')}>
-                            <p>{getPrice(priceSell)}</p>
-                            <button onClick={() => placeOrder(OrderSide.sell, priceSell)}>Sell</button>
+                            <p 
+                                className={disabled ? styles.disabled : undefined}
+                            >
+                                {isLoading ? <span className={styles.loader_r}></span> : getPrice(offer)}
+                            </p>
+                            <button 
+                                onClick={() => placeOrder(OrderSide.sell, offer)}
+                                disabled={disabled || isLoading} 
+                                className={disabled ? styles.disabled : undefined}
+                            >
+                                Sell
+                            </button>
                         </div>
                     </>
                 )}

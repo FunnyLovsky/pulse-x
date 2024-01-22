@@ -26,3 +26,7 @@ export interface PlaceOrder extends ClientMessage {
     price: number
 }
 
+export interface CancelOrder extends ClientMessage {
+    orderId: string
+}
+

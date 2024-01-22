@@ -41,10 +41,14 @@ const marketReducer = createSlice({
         succesSub(state, action: PayloadAction<string>) {
             state.isLoading = false;
             state.subscriptionId = action.payload
+        },
+        
+        setError(state, action: PayloadAction<string | null>) {
+            state.error = action.payload
         }
     }
 })
 
-export const {setIsLoading, setPrice, setSubscriptionId, succesSub} = marketReducer.actions
+export const {setIsLoading, setPrice, setSubscriptionId, succesSub, setError} = marketReducer.actions
 
 export default marketReducer.reducer
