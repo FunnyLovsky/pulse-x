@@ -19,7 +19,12 @@ const OrderMain = () => {
     if(isLoading) {
         return(
             <Container>
-                <h1>Data is loading...</h1>
+                <h1 className={styles.load}>
+                    <div className={styles.cont}>
+                        <span className={styles.loader}></span>
+                        <span>Подключение к бирже...</span>
+                    </div>
+                </h1>
             </Container>
         )
     }
