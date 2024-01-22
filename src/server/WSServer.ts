@@ -100,7 +100,7 @@ export class WSServer {
                         result => this.onmessage!(JSON.stringify(result))
                     )
                     .catch(
-                        err => console.log('WSServer: abort')
+                        () => console.log('WSServer: abort')
                     )
                     .finally(
                         () => this.orderControllers = this.orderControllers.filter(item => orderId !== item.orderId)

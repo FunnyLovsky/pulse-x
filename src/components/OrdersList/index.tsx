@@ -22,20 +22,24 @@ const OrderList = () => {
                         <p>Объем</p>
                         <p>Инструмент</p>
                     </div>
-                    
-                    {orders.map((order, index) => 
-                        <Order 
-                            key={order.id + index}
-                            id={order.id}
-                            create={order.create}
-                            change={order.change}
-                            status={order.status}
-                            side={order.side}
-                            amount={order.amount}
-                            price={order.price}
-                            instrument={order.instrument}
-                     />
-                    )}
+                    {orders.length > 0 
+                        ? 
+                        orders.map((order, index) => 
+                            <Order 
+                                key={order.id + index}
+                                id={order.id}
+                                create={order.create}
+                                change={order.change}
+                                status={order.status}
+                                side={order.side}
+                                amount={order.amount}
+                                price={order.price}
+                                instrument={order.instrument}
+                            />
+                         )
+                        :
+                        <h2 className={styles.cap}>Ваш список заявок пуст.</h2>
+                    }
                 </div>
 
             </div>
