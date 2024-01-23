@@ -88,9 +88,7 @@ const clearOrder = (id: string) => async (dispatch: AppDispatch) => {
 const fetchOrders = () => async (dispatch: AppDispatch) => {
     try {
         const json = await DBService.fetchOrders();
-        const active = json.filter(
-            (order) => order.status === OrderStatus.active,
-        );
+        const active = json.filter((order) => order.status === OrderStatus.active);
 
         dispatch(addActiveOrders(active));
         dispatch(addOrders(json));

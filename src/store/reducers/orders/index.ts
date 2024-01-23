@@ -36,9 +36,7 @@ const ordersReducer = createSlice({
         },
 
         deleteOrder(state, action: PayloadAction<IActiveOrder>) {
-            state.orders = state.orders.filter(
-                (order) => order.id !== action.payload.id,
-            );
+            state.orders = state.orders.filter((order) => order.id !== action.payload.id);
         },
 
         placeActiveOrder(state, action: PayloadAction<IActiveOrder>) {

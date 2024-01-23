@@ -10,9 +10,7 @@ const AppRouter = () => {
     return (
         <Routes>
             {isAuth ? (
-                <Route element={<Sidebar />}>
-                    {renderRoutes(authRoutes, RoutesName.ORDERS)}
-                </Route>
+                <Route element={<Sidebar />}>{renderRoutes(authRoutes, RoutesName.ORDERS)}</Route>
             ) : (
                 renderRoutes(publicRoutes, RoutesName.LOGIN)
             )}

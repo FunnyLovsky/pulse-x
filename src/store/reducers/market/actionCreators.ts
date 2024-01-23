@@ -17,19 +17,18 @@ const subscribe = (instrument: Instrument) => async (dispatch: AppDispatch) => {
     );
 };
 
-const unsubscribe =
-    (subscriptionId: string) => async (dispatch: AppDispatch) => {
-        dispatch(
-            sendMessage({
-                messageType: ClientMessageType.unsubscribeMarketData,
-                message: {
-                    subscriptionId,
-                },
-            }),
-        );
-        dispatch(setSubscriptionId(null));
-        dispatch(setPrice({ bid: 0, offer: 0 }));
-    };
+const unsubscribe = (subscriptionId: string) => async (dispatch: AppDispatch) => {
+    dispatch(
+        sendMessage({
+            messageType: ClientMessageType.unsubscribeMarketData,
+            message: {
+                subscriptionId,
+            },
+        }),
+    );
+    dispatch(setSubscriptionId(null));
+    dispatch(setPrice({ bid: 0, offer: 0 }));
+};
 
 export const MarketActionCreators = {
     subscribe,

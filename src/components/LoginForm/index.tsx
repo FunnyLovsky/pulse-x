@@ -30,10 +30,7 @@ const LoginForm = () => {
         <div className={styles.inner}>
             <div className={styles.container}>
                 <div className={styles.item}>
-                    <div
-                        className={styles.error}
-                        style={{ opacity: error ? 1 : 0 }}
-                    >
+                    <div className={styles.error} style={{ opacity: error ? 1 : 0 }}>
                         {error}
                     </div>
                     <Logo />
@@ -43,9 +40,9 @@ const LoginForm = () => {
                             type="text"
                             placeholder="Username"
                             required={true}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>,
-                            ) => setUsername(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                setUsername(e.target.value)
+                            }
                             value={username}
                             disabled={isLoading}
                             onFocus={clearError}
@@ -54,9 +51,9 @@ const LoginForm = () => {
                             type="password"
                             placeholder="Password"
                             required={true}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>,
-                            ) => setPassword(e.target.value)}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                                setPassword(e.target.value)
+                            }
                             value={password}
                             disabled={isLoading}
                             onFocus={clearError}

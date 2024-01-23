@@ -48,12 +48,7 @@ const marketReducer = createSlice({
     },
 });
 
-export const {
-    setIsLoading,
-    setPrice,
-    setSubscriptionId,
-    succesSub,
-    setError,
-} = marketReducer.actions;
+export const { setIsLoading, setPrice, setSubscriptionId, succesSub, setError } =
+    marketReducer.actions;
 
 export default marketReducer.reducer;

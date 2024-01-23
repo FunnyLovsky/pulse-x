@@ -10,16 +10,7 @@ import { IOrder } from '../../Models/IOrder';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useActions } from '../../store/hooks/useActions';
 
-const Order: FC<IOrder> = ({
-    id,
-    create,
-    change,
-    status,
-    side,
-    amount,
-    instrument,
-    price,
-}) => {
+const Order: FC<IOrder> = ({ id, create, change, status, side, amount, instrument, price }) => {
     const [createDate, createTime] = formatDate(create);
     const [changeDate, changeTime] = formatDate(change);
     const orderStatus = getStatus(status);

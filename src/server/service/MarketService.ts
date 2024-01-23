@@ -1,21 +1,20 @@
 import { Quote } from '../../Models/Base';
 import {
-    PlaceOrder,
+    ClientEnvelope,
     SubscribeMarketData,
     UnsubscribeMarketData,
 } from '../../Models/ClientMessages';
 import {
     ErrorInfo,
-    ExecutionReport,
     MarketDataUpdate,
     ServerEnvelope,
     SuccessInfo,
 } from '../../Models/ServerMessages';
-import { Instrument, OrderStatus, ServerMessageType } from '../../api/Enums';
+import { Instrument, ServerMessageType } from '../../api/Enums';
 import { valueGenerate } from '../utils/QuoteGenerate';
 import { UUIDGenerator } from '../utils/UUIDGenerate';
 
-class StockService {
+class MarketService {
     subscriptionId: string | null;
     instrument: Instrument | null;
 
@@ -24,25 +23,31 @@ class StockService {
         this.instrument = null;
     }
 
-    subscribeMarketData(message: SubscribeMarketData) {
-        this.instrument = message.instrument;
+    subscribeMarketData(data: ClientEnvelope, onmessage: (data: string) => void) {
+        const { instrument } = data.message as SubscribeMarketData;
+        this.instrument = instrument;
 
         if (Math.random() <= 0.15) {
-            return {
+            const message = {
                 messageType: ServerMessageType.error,
                 message: {
                     reason: 'Ошибка с подключением к биржевому серверу.',
                 } as ErrorInfo,
             } as ServerEnvelope;
+
+            onmessage(JSON.stringify(message));
         } else {
             this.subscriptionId = UUIDGenerator.generate();
-
-            return {
+            const message = {
                 messageType: ServerMessageType.success,
                 message: {
                     subscriptionId: this.subscriptionId,
                 } as SuccessInfo,
             } as ServerEnvelope;
+
+            onmessage(JSON.stringify(message));
+
+            onmessage(JSON.stringify(this.marketDataUpdate()));
         }
     }
 
@@ -62,24 +67,13 @@ class StockService {
         } as ServerEnvelope;
     }
 
-    unsubscribeMarketData(message: UnsubscribeMarketData) {
-        if (message.subscriptionId === this.subscriptionId) {
+    unsubscribeMarketData(data: ClientEnvelope) {
+        const { subscriptionId } = data.message as UnsubscribeMarketData;
+
+        if (subscriptionId === this.subscriptionId) {
             this.subscriptionId = null;
         }
     }
-
-    placeOrder(message: PlaceOrder) {
-        const { orderId } = message;
-        const orderStatus =
-            Math.random() >= 0.5 ? OrderStatus.filled : OrderStatus.rejected;
-        return {
-            messageType: ServerMessageType.executionReport,
-            message: {
-                orderId,
-                orderStatus,
-            } as ExecutionReport,
-        } as ServerEnvelope;
-    }
 }
 
-export default new StockService();
+export default new MarketService();

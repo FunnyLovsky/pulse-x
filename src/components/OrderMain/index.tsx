@@ -9,9 +9,7 @@ import { useAppSelector } from '../../store/hooks/useAppSelector';
 
 const OrderMain = () => {
     const { connect, fetchOrders } = useActions();
-    const { isConnected, isLoading } = useAppSelector(
-        (state) => state.socketReducer,
-    );
+    const { isConnected, isLoading } = useAppSelector((state) => state.socketReducer);
     const { error } = useAppSelector((state) => state.marketReducer);
 
     useEffect(() => {

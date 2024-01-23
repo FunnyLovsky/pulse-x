@@ -91,9 +91,7 @@ export const socketMiddleware = (url: string): Middleware<StoreApi> => {
                                     change: Date.now(),
                                     status: order.orderStatus,
                                 };
-                                dispatch(
-                                    cancelActiveOrder({ id: order.orderId }),
-                                );
+                                dispatch(cancelActiveOrder({ id: order.orderId }));
                                 dispatch(setOrder(orderCh));
 
                                 const orders = getState().ordersReducer.orders;
@@ -103,8 +101,7 @@ export const socketMiddleware = (url: string): Middleware<StoreApi> => {
                             case ServerMessageType.marketDataUpdate:
                                 console.log('marketDataUpdate:', data.message);
 
-                                const marketData =
-                                    data.message as MarketDataUpdate;
+                                const marketData = data.message as MarketDataUpdate;
                                 dispatch(setPrice(marketData.quotes[0]));
                                 break;
 

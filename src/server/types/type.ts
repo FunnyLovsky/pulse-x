@@ -8,3 +8,8 @@ export interface IWSServer {
     send: (data: string) => void;
     close: () => void;
 }
+
+export interface IController {
+    orderId: string;
+    controller: AbortController | null;
+}

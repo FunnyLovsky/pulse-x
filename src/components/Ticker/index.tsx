@@ -8,7 +8,7 @@ import { useSetAmount } from './hooks/useSetAmount';
 import { useAppSelector } from '../../store/hooks/useAppSelector';
 
 const Ticker = () => {
-    const { amount, setAmount, setInputAmount } = useSetAmount('10');
+    const { amount, setInputAmount } = useSetAmount('10');
     const [instrument, setInstrument] = useState('');
     const { subscriptionId, bid, offer, isLoading, error } = useAppSelector(
         (state) => state.marketReducer,
@@ -35,8 +35,6 @@ const Ticker = () => {
             instrument: Number(instrument),
         };
         createOrder(order);
-        setInstrument('');
-        setAmount('10');
     };
 
     const getPrice = (price: number) => {
@@ -70,11 +68,7 @@ const Ticker = () => {
                 {instrument && (
                     <>
                         <div className={[styles.item, styles.buy].join(' ')}>
-                            <p
-                                className={
-                                    disabled ? styles.disabled : undefined
-                                }
-                            >
+                            <p className={disabled ? styles.disabled : undefined}>
                                 {isLoading ? (
                                     <span className={styles.loader_g}></span>
                                 ) : (
@@ -84,19 +78,13 @@ const Ticker = () => {
                             <button
                                 onClick={() => placeOrder(OrderSide.buy, bid)}
                                 disabled={disabled || isLoading}
-                                className={
-                                    disabled ? styles.disabled : undefined
-                                }
+                                className={disabled ? styles.disabled : undefined}
                             >
                                 Buy
                             </button>
                         </div>
                         <div className={[styles.item, styles.sell].join(' ')}>
-                            <p
-                                className={
-                                    disabled ? styles.disabled : undefined
-                                }
-                            >
+                            <p className={disabled ? styles.disabled : undefined}>
                                 {isLoading ? (
                                     <span className={styles.loader_r}></span>
                                 ) : (
@@ -104,13 +92,9 @@ const Ticker = () => {
                                 )}
                             </p>
                             <button
-                                onClick={() =>
-                                    placeOrder(OrderSide.sell, offer)
-                                }
+                                onClick={() => placeOrder(OrderSide.sell, offer)}
                                 disabled={disabled || isLoading}
-                                className={
-                                    disabled ? styles.disabled : undefined
-                                }
+                                className={disabled ? styles.disabled : undefined}
                             >
                                 Sell
                             </button>

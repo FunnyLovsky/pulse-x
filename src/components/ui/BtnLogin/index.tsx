@@ -11,15 +11,8 @@ const BtnLogin: FC<IButton> = ({ children, onClick, loading }) => {
     const active = [styles.active, styles.btn].join(' ');
     const disabled = [styles.dis, styles.btn].join(' ');
     return (
-        <button
-            className={loading ? disabled : active}
-            onClick={onClick}
-            disabled={loading}
-        >
-            <span
-                className={styles.loader}
-                style={{ opacity: loading ? 1 : 0 }}
-            />
+        <button className={loading ? disabled : active} onClick={onClick} disabled={loading}>
+            <span className={styles.loader} style={{ opacity: loading ? 1 : 0 }} />
             <span>{children}</span>
         </button>
     );

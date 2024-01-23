@@ -19,9 +19,7 @@ const ActiveOrderList = () => {
                 activeOrders.map((order) => (
                     <div className={styles.item} key={order.id}>
                         <p>#{order.id}</p>
-                        <button onClick={() => cancelHandler(order.id)}>
-                            Cancel
-                        </button>
+                        <button onClick={() => cancelHandler(order.id)}>Cancel</button>
                     </div>
                 ))
             ) : (

@@ -11,15 +11,7 @@ interface IInput {
     onFocus?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: FC<IInput> = ({
-    type,
-    placeholder,
-    onChange,
-    value,
-    required,
-    disabled,
-    onFocus,
-}) => {
+const Input: FC<IInput> = ({ type, placeholder, onChange, value, required, disabled, onFocus }) => {
     return (
         <input
             type={type}

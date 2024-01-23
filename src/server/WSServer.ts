@@ -1,19 +1,8 @@
-import {
-    CancelOrder,
-    ClientEnvelope,
-    PlaceOrder,
-    SubscribeMarketData,
-    UnsubscribeMarketData,
-} from '../Models/ClientMessages';
-import { ServerEnvelope } from '../Models/ServerMessages';
-import { ClientMessageType, ServerMessageType } from '../api/Enums';
-import StockService from './service/StockService';
-import { valueGenerate } from './utils/QuoteGenerate';
-
-interface IController {
-    orderId: string;
-    controller: AbortController | null;
-}
+import { ClientEnvelope } from '../Models/ClientMessages';
+import { ClientMessageType } from '../api/Enums';
+import { OrderService } from './service/OrderService';
+import MarketService from './service/MarketService';
+import { IController } from './types/type';
 
 export class WSServer {
     url: string;
@@ -64,74 +53,31 @@ export class WSServer {
 
         switch (data.messageType) {
             case ClientMessageType.subscribeMarketData:
-                const message = StockService.subscribeMarketData(
-                    data.message as SubscribeMarketData,
-                );
-
-                this.onmessage(JSON.stringify(message));
-
-                if (message.messageType === ServerMessageType.success) {
-                    this.onmessage(
-                        JSON.stringify(StockService.marketDataUpdate()),
-                    );
-                }
+                MarketService.subscribeMarketData(data, this.onmessage);
 
                 break;
 
             case ClientMessageType.unsubscribeMarketData:
-                StockService.unsubscribeMarketData(
-                    data.message as UnsubscribeMarketData,
-                );
+                MarketService.unsubscribeMarketData(data);
 
                 break;
 
             case ClientMessageType.cancelOrder:
-                const order = data.message as CancelOrder;
-                this.cancelPlaceOrder(order.orderId);
+                OrderService.cancelOrder(data, this.cancelPlaceOrder, this)
 
                 break;
 
             case ClientMessageType.placeOrder:
-                const { orderId } = data.message as CancelOrder;
-                const controller = new AbortController();
-                this.orderControllers.push({ orderId, controller });
+                OrderService.placeOrder(data, this.orderControllers, this.onmessage);
 
-                new Promise<ServerEnvelope>((resolve, reject) => {
-                    const timeoutId = setTimeout(
-                        () => {
-                            resolve(
-                                StockService.placeOrder(
-                                    data.message as PlaceOrder,
-                                ),
-                            );
-                        },
-                        valueGenerate(5, 8) * 1000,
-                    );
-
-                    controller.signal.addEventListener('abort', () => {
-                        clearTimeout(timeoutId);
-                        reject(new Error('Запрос отменен'));
-                    });
-                })
-                    .then((result) => this.onmessage!(JSON.stringify(result)))
-                    .catch(() => console.log('WSServer: abort'))
-                    .finally(
-                        () =>
-                            (this.orderControllers =
-                                this.orderControllers.filter(
-                                    (item) => orderId !== item.orderId,
-                                )),
-                    );
                 break;
 
             default:
-                break;
-        }
+                if (this.onerror) {
+                    this.onerror(new Error('Неизвестный запрос'));
+                }
 
-        if (0) {
-            if (this.onerror) {
-                this.onerror(new Error('Ошибка соединения'));
-            }
+                break;
         }
     }
 }
