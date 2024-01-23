@@ -1,9 +1,5 @@
 import { Middleware } from '@reduxjs/toolkit';
-import {
-    connectSocket,
-    disconnectedSocket,
-    sendMessage,
-} from '.';
+import { connectSocket, disconnectedSocket, sendMessage } from '.';
 import { IWSServer } from '../../../server/types/type';
 import { WSServer } from '../../../server/WSServer';
 import { AppDispatch, RootState } from '../..';

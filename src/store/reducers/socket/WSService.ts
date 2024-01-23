@@ -1,6 +1,12 @@
 import { connected, disconnected } from '.';
 import { AppDispatch, RootState } from '../..';
-import { ErrorInfo, ExecutionReport, MarketDataUpdate, ServerEnvelope, SuccessInfo } from '../../../Models/ServerMessages';
+import {
+    ErrorInfo,
+    ExecutionReport,
+    MarketDataUpdate,
+    ServerEnvelope,
+    SuccessInfo,
+} from '../../../Models/ServerMessages';
 import { ServerMessageType } from '../../../api/Enums';
 import { IWSServer } from '../../../server/types/type';
 import { setError, setIsLoading, setPrice, succesSub } from '../market';
