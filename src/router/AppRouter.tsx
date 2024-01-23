@@ -1,7 +1,8 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { RoutesName, authRoutes, publicRoutes } from './routes';
 import { useAppSelector } from '../store/hooks/useAppSelector';
 import Sidebar from '../components/Sidebar';
+import { renderRoutes } from './utils/renderRoutes';
 
 const AppRouter = () => {
     const { isAuth } = useAppSelector((state) => state.authReducer);
@@ -10,32 +11,10 @@ const AppRouter = () => {
         <Routes>
             {isAuth ? (
                 <Route element={<Sidebar />}>
-                    {authRoutes.map((route) => (
-                        <Route
-                            key={route.path}
-                            path={route.path}
-                            element={route.component}
-                        />
-                    ))}
-                    <Route
-                        path="*"
-                        element={<Navigate to={RoutesName.MAIN} replace />}
-                    />
+                    {renderRoutes(authRoutes, RoutesName.ORDERS)}
                 </Route>
             ) : (
-                <>
-                    {publicRoutes.map((route) => (
-                        <Route
-                            key={route.path}
-                            path={route.path}
-                            element={route.component}
-                        />
-                    ))}
-                    <Route
-                        path="*"
-                        element={<Navigate to={RoutesName.LOGIN} replace />}
-                    />
-                </>
+                renderRoutes(publicRoutes, RoutesName.LOGIN)
             )}
         </Routes>
     );
