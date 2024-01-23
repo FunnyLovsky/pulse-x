@@ -33,15 +33,15 @@
     align-items: center;
     padding: 12px 20px 12px;
     border-radius: 13px;
-    background: $bg_link;
 
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    color: $color_link;
+    color: $light_gray;
     font-size: 18px;
     text-decoration: none;
     transition: 0.3s;
+    margin-bottom: 10px;
 
     & svg {
         margin-right: 15px;
@@ -50,7 +50,8 @@
     }
 
     &:hover {
-        color: $white;
+        color: $color_link;
+        background: $bg_link;
     }
 
     &:active {

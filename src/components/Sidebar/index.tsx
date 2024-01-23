@@ -1,8 +1,10 @@
-import { Link, Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import Logo from '../ui/Logo';
 import styles from './style.module.scss';
+import './style.scss';
 import { RoutesName } from '../../router/routes';
 import { IoReorderFour, IoLogOutOutline } from 'react-icons/io5';
+import { GrHomeRounded } from "react-icons/gr";
 import { useActions } from '../../store/hooks/useActions';
 
 const Sidebar = () => {
@@ -21,14 +23,14 @@ const Sidebar = () => {
                         <Logo />
                         <h2 className={styles.title}>PulseX</h2>
                     </div>
-                    <Link to={RoutesName.MAIN} className={styles.link}>
-                        <IoReorderFour />
+                    <NavLink to={RoutesName.MAIN} className={styles.link}>
+                        <GrHomeRounded/>
                         <p>Главная</p>
-                    </Link>
-                    <Link to={RoutesName.ORDERS} className={styles.link}>
+                    </NavLink>
+                    <NavLink to={RoutesName.ORDERS} className={styles.link}>
                         <IoReorderFour />
                         <p>Заявки</p>
-                    </Link>
+                    </NavLink>
                 </div>
 
                 <button className={styles.btn} onClick={logoutHandler}>
