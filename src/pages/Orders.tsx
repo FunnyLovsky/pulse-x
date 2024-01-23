@@ -1,15 +1,13 @@
-import Header from "../components/Header";
-import OrderMain from "../components/OrderMain";
-import Sidebar from "../components/Sidebar";
+import Header from '../components/Header';
+import OrderMain from '../components/OrderMain';
 
 const Orders = () => {
-    return(
+    return (
         <>
-            <Sidebar/>
-            <Header/>
-            <OrderMain/>
+            <Header />
+            <OrderMain />
         </>
-    )
+    );
 };
 
 export default Orders;

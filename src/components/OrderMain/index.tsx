@@ -8,16 +8,18 @@ import { useActions } from '../../store/hooks/useActions';
 import { useAppSelector } from '../../store/hooks/useAppSelector';
 
 const OrderMain = () => {
-    const {connect, fetchOrders} = useActions()
-    const {isConnected, isLoading} = useAppSelector(state => state.socketReducer)
-    const {error} = useAppSelector(state => state.marketReducer)
+    const { connect, fetchOrders } = useActions();
+    const { isConnected, isLoading } = useAppSelector(
+        (state) => state.socketReducer,
+    );
+    const { error } = useAppSelector((state) => state.marketReducer);
 
     useEffect(() => {
         fetchOrders();
-    }, [])
+    }, []);
 
-    if(isLoading) {
-        return(
+    if (isLoading) {
+        return (
             <Container>
                 <h1 className={styles.load}>
                     <div className={styles.cont}>
@@ -26,9 +28,8 @@ const OrderMain = () => {
                     </div>
                 </h1>
             </Container>
-        )
+        );
     }
-    
 
     return (
         <Container>
@@ -45,7 +46,6 @@ const OrderMain = () => {
                     <button onClick={connect}>Connect</button>
                 </>
             )}
-
         </Container>
     );
 };

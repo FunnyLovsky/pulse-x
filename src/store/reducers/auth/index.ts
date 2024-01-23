@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { IUser } from "../../../Models/IUser";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from '../../../Models/IUser';
 
 interface AuthState {
-    isAuth: boolean,
-    isAuthLoading: boolean,
-    isLoading: boolean,
-    user: IUser,
-    error: null | string
+    isAuth: boolean;
+    isAuthLoading: boolean;
+    isLoading: boolean;
+    user: IUser;
+    error: null | string;
 }
 
 const initialState: AuthState = {
@@ -14,8 +14,8 @@ const initialState: AuthState = {
     isAuthLoading: true,
     user: {} as IUser,
     error: null,
-    isLoading: false
-}
+    isLoading: false,
+};
 
 const authReducer = createSlice({
     name: 'auth',
@@ -37,12 +37,13 @@ const authReducer = createSlice({
         setError(state, action: PayloadAction<string | null>) {
             state.error = action.payload;
         },
-        
+
         setIsLoading(state, action: PayloadAction<boolean>) {
             state.isLoading = action.payload;
         },
-    }
-})
+    },
+});
 
-export const {setError, setIsAuth, setIsAuthLoading, setUser, setIsLoading} = authReducer.actions
-export default authReducer.reducer
+export const { setError, setIsAuth, setIsAuthLoading, setUser, setIsLoading } =
+    authReducer.actions;
+export default authReducer.reducer;

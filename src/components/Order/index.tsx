@@ -7,11 +7,19 @@ import { formatInstrument } from '../../utils/formatInstrument';
 import ARROWS from '../../assets/arrows.svg';
 import { formatNumber } from '../../utils/formatNumber';
 import { IOrder } from '../../Models/IOrder';
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import { useActions } from '../../store/hooks/useActions';
 
-
-const Order: FC<IOrder> = ({id, create, change, status, side, amount, instrument, price}) => {
+const Order: FC<IOrder> = ({
+    id,
+    create,
+    change,
+    status,
+    side,
+    amount,
+    instrument,
+    price,
+}) => {
     const [createDate, createTime] = formatDate(create);
     const [changeDate, changeTime] = formatDate(change);
     const orderStatus = getStatus(status);
@@ -19,9 +27,9 @@ const Order: FC<IOrder> = ({id, create, change, status, side, amount, instrument
     const orderSide = getSide(side);
     const [firsIn, secondIn] = formatInstrument(instrument);
 
-    const {clearOrder} = useActions()
+    const { clearOrder } = useActions();
 
-    return(
+    return (
         <div className={styles.order}>
             <div className={styles.item}>
                 <p className={styles.id}>#{id}</p>
@@ -29,17 +37,13 @@ const Order: FC<IOrder> = ({id, create, change, status, side, amount, instrument
 
             <div className={styles.item}>
                 <p className={styles.date}>
-                    <span>{createDate}</span>
-                    {' '}
-                    <span>{createTime}</span>
+                    <span>{createDate}</span> <span>{createTime}</span>
                 </p>
             </div>
 
             <div className={styles.item}>
                 <p className={styles.date}>
-                    <span>{changeDate}</span>
-                    {' '}
-                    <span>{changeTime}</span>
+                    <span>{changeDate}</span> <span>{changeTime}</span>
                 </p>
             </div>
 
@@ -67,14 +71,11 @@ const Order: FC<IOrder> = ({id, create, change, status, side, amount, instrument
                 </p>
             </div>
 
-            <button 
-                className={styles.del}
-                onClick={() => clearOrder(id)}
-            >
-                <RiDeleteBin6Line/>
+            <button className={styles.del} onClick={() => clearOrder(id)}>
+                <RiDeleteBin6Line />
             </button>
         </div>
-    )
+    );
 };
 
 export default Order;

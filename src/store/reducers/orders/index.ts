@@ -1,16 +1,15 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IActiveOrder, IChangeOrder, IOrder } from "../../../Models/IOrder";
-
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IActiveOrder, IChangeOrder, IOrder } from '../../../Models/IOrder';
 
 interface OrderState {
-    orders: IOrder[],
-    activeOrders: IActiveOrder[],
+    orders: IOrder[];
+    activeOrders: IActiveOrder[];
 }
 
 const initialState: OrderState = {
     activeOrders: [],
-    orders: []
-}
+    orders: [],
+};
 
 const ordersReducer = createSlice({
     name: 'orders',
@@ -25,43 +24,47 @@ const ordersReducer = createSlice({
         },
 
         setOrder(state, action: PayloadAction<IChangeOrder>) {
-            state.orders = state.orders.map(order =>
+            state.orders = state.orders.map((order) =>
                 order.id === action.payload.id
-                    ? { ...order, status: action.payload.status, change: action.payload.change }
-                    : order
+                    ? {
+                          ...order,
+                          status: action.payload.status,
+                          change: action.payload.change,
+                      }
+                    : order,
             );
         },
 
         deleteOrder(state, action: PayloadAction<IActiveOrder>) {
-            state.orders = state.orders.filter(order => 
-                order.id !== action.payload.id
-            )
+            state.orders = state.orders.filter(
+                (order) => order.id !== action.payload.id,
+            );
         },
 
         placeActiveOrder(state, action: PayloadAction<IActiveOrder>) {
-            state.activeOrders.push(action.payload)
+            state.activeOrders.push(action.payload);
         },
 
         cancelActiveOrder(state, action: PayloadAction<IActiveOrder>) {
-            state.activeOrders = state.activeOrders.filter(order => 
-                order.id !== action.payload.id
-            )
+            state.activeOrders = state.activeOrders.filter(
+                (order) => order.id !== action.payload.id,
+            );
         },
 
         addActiveOrders(state, action: PayloadAction<IActiveOrder[]>) {
             state.activeOrders = action.payload;
         },
-    }
-})
+    },
+});
 
 export const {
-    placeActiveOrder, 
-    addOrders, 
-    cancelActiveOrder, 
-    placeOrder, 
-    setOrder, 
+    placeActiveOrder,
+    addOrders,
+    cancelActiveOrder,
+    placeOrder,
+    setOrder,
     addActiveOrders,
-    deleteOrder
-} = ordersReducer.actions
+    deleteOrder,
+} = ordersReducer.actions;
 
-export default ordersReducer.reducer
+export default ordersReducer.reducer;

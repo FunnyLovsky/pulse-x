@@ -1,10 +1,19 @@
-
-import { Quote } from "../../Models/Base";
-import { PlaceOrder, SubscribeMarketData, UnsubscribeMarketData } from "../../Models/ClientMessages";
-import { ErrorInfo, ExecutionReport, MarketDataUpdate, ServerEnvelope, SuccessInfo } from "../../Models/ServerMessages";
-import { Instrument, OrderStatus, ServerMessageType } from "../../api/Enums";
-import { valueGenerate } from "../utils/QuoteGenerate";
-import { UUIDGenerator } from "../utils/UUIDGenerate";
+import { Quote } from '../../Models/Base';
+import {
+    PlaceOrder,
+    SubscribeMarketData,
+    UnsubscribeMarketData,
+} from '../../Models/ClientMessages';
+import {
+    ErrorInfo,
+    ExecutionReport,
+    MarketDataUpdate,
+    ServerEnvelope,
+    SuccessInfo,
+} from '../../Models/ServerMessages';
+import { Instrument, OrderStatus, ServerMessageType } from '../../api/Enums';
+import { valueGenerate } from '../utils/QuoteGenerate';
+import { UUIDGenerator } from '../utils/UUIDGenerate';
 
 class StockService {
     subscriptionId: string | null;
@@ -12,7 +21,7 @@ class StockService {
 
     constructor() {
         this.subscriptionId = null;
-        this.instrument = null
+        this.instrument = null;
     }
 
     subscribeMarketData(message: SubscribeMarketData) {
@@ -22,10 +31,9 @@ class StockService {
             return {
                 messageType: ServerMessageType.error,
                 message: {
-                    reason: 'Ошибка с подключением к биржевому серверу.'
-                } as ErrorInfo
+                    reason: 'Ошибка с подключением к биржевому серверу.',
+                } as ErrorInfo,
             } as ServerEnvelope;
-
         } else {
             this.subscriptionId = UUIDGenerator.generate();
 
@@ -33,7 +41,7 @@ class StockService {
                 messageType: ServerMessageType.success,
                 message: {
                     subscriptionId: this.subscriptionId,
-                } as SuccessInfo
+                } as SuccessInfo,
             } as ServerEnvelope;
         }
     }
@@ -47,30 +55,31 @@ class StockService {
                 quotes: [
                     {
                         bid: valueGenerate(2, 10),
-                        offer: valueGenerate(2, 10)
-                    } as Quote
-                ] 
-            } as MarketDataUpdate
-        } as ServerEnvelope
+                        offer: valueGenerate(2, 10),
+                    } as Quote,
+                ],
+            } as MarketDataUpdate,
+        } as ServerEnvelope;
     }
 
     unsubscribeMarketData(message: UnsubscribeMarketData) {
-        if(message.subscriptionId === this.subscriptionId) {
+        if (message.subscriptionId === this.subscriptionId) {
             this.subscriptionId = null;
         }
     }
 
     placeOrder(message: PlaceOrder) {
         const { orderId } = message;
-        const orderStatus = Math.random() >= 0.5 ? OrderStatus.filled : OrderStatus.rejected;
+        const orderStatus =
+            Math.random() >= 0.5 ? OrderStatus.filled : OrderStatus.rejected;
         return {
             messageType: ServerMessageType.executionReport,
             message: {
                 orderId,
-                orderStatus
-            } as ExecutionReport
-        } as ServerEnvelope
+                orderStatus,
+            } as ExecutionReport,
+        } as ServerEnvelope;
     }
 }
 
-export default new StockService()
+export default new StockService();

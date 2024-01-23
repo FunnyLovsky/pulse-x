@@ -1,16 +1,16 @@
-import { OrderStatus } from "../../../api/Enums"
+import { OrderStatus } from '../../../api/Enums';
 
 export const getStatus = (status: number) => {
     switch (status) {
         case OrderStatus.active:
-            return 'Active'
+            return 'Active';
         case OrderStatus.filled:
-            return 'Filled'
+            return 'Filled';
         case OrderStatus.rejected:
-            return 'Rejected'
+            return 'Rejected';
         case OrderStatus.cancelled:
-            return 'Cancelled'
+            return 'Cancelled';
         default:
             break;
     }
-}
+};

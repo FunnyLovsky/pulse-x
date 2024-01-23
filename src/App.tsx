@@ -7,23 +7,21 @@ import { useAppSelector } from './store/hooks/useAppSelector';
 import { useActions } from './store/hooks/useActions';
 
 const App = () => {
-    const {checkLogin} = useActions()
-    const {isAuthLoading} = useAppSelector(state => state.authReducer)
+    const { checkLogin } = useActions();
+    const { isAuthLoading } = useAppSelector((state) => state.authReducer);
 
     useEffect(() => {
-        checkLogin()
-    }, [])
+        checkLogin();
+    }, []);
 
-    if(isAuthLoading) {
-        return(
-            <AuthLoader/>
-        )
+    if (isAuthLoading) {
+        return <AuthLoader />;
     }
     return (
         <BrowserRouter>
-            <AppRouter/>
+            <AppRouter />
         </BrowserRouter>
     );
-}
+};
 
 export default App;

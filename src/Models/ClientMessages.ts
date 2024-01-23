@@ -1,32 +1,28 @@
-import {Envelope, Message} from "./Base";
-import {ClientMessageType, Instrument, OrderSide} from "../api/Enums";
-
+import { Envelope, Message } from './Base';
+import { ClientMessageType, Instrument, OrderSide } from '../api/Enums';
 
 export interface ClientEnvelope extends Envelope {
-    messageType: ClientMessageType
+    messageType: ClientMessageType;
 }
 
-export interface ClientMessage extends Message {
-
-}
+export interface ClientMessage extends Message {}
 
 export interface SubscribeMarketData extends ClientMessage {
-    instrument: Instrument
+    instrument: Instrument;
 }
 
 export interface UnsubscribeMarketData extends ClientMessage {
-    subscriptionId: string
+    subscriptionId: string;
 }
 
 export interface PlaceOrder extends ClientMessage {
-    orderId: string
-    instrument: Instrument
-    side: OrderSide
-    amount: number
-    price: number
+    orderId: string;
+    instrument: Instrument;
+    side: OrderSide;
+    amount: number;
+    price: number;
 }
 
 export interface CancelOrder extends ClientMessage {
-    orderId: string
+    orderId: string;
 }
-

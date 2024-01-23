@@ -33,7 +33,7 @@
         font-style: normal;
         font-weight: 600;
         line-height: normal;
-        color: #F5D76E;
+        color: #f5d76e;
     }
 
     & button {
@@ -46,7 +46,7 @@
         border-radius: 10px;
         border: none;
         outline: none;
-        transition: .3s;
+        transition: 0.3s;
         cursor: pointer;
         background: $light_purple;
 
@@ -55,7 +55,7 @@
         }
 
         &:active {
-            transform: scale(.7);
+            transform: scale(0.7);
         }
     }
 }
@@ -65,5 +65,3 @@
     padding: 30px 10px;
     text-align: center;
 }
-
-

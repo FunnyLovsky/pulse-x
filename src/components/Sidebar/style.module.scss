@@ -41,7 +41,7 @@
     color: $color_link;
     font-size: 18px;
     text-decoration: none;
-    transition: .3s;
+    transition: 0.3s;
 
     & svg {
         margin-right: 15px;
@@ -53,9 +53,8 @@
         color: $white;
     }
 
-    
     &:active {
-        transform: scale(.8);
+        transform: scale(0.8);
     }
 }
 
@@ -74,7 +73,7 @@
     color: $light_gray;
     font-size: 18px;
     text-decoration: none;
-    transition: .3s;
+    transition: 0.3s;
 
     & svg {
         margin-right: 15px;
@@ -89,7 +88,6 @@
     }
 
     &:active {
-        transform: scale(.8);
+        transform: scale(0.8);
     }
 }
-

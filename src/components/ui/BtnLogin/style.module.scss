@@ -12,18 +12,18 @@
     line-height: normal;
     border-radius: 10px;
     text-align: center;
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .active {
     margin: 30px auto 15px;
     padding: 10px 50px;
     color: $white;
-    background: #AC6AEC ;
+    background: #ac6aec;
 
     &:hover {
         cursor: pointer;
-        background:  #903de3;
+        background: #903de3;
     }
 
     &:active {
@@ -34,9 +34,9 @@
 .dis {
     margin: 30px auto 15px;
     padding: 10px 50px;
-    background: #ab6aec ;
+    background: #ab6aec;
     color: #ffffff;
-    cursor: not-allowed
+    cursor: not-allowed;
 }
 
 .loader {
@@ -44,12 +44,12 @@
     left: 15px;
     width: 16px;
     height: 16px;
-    border: 3px solid #FFF;
-    border-bottom-color: #EC5EB7;
+    border: 3px solid #fff;
+    border-bottom-color: #ec5eb7;
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
-    animation: rotation 1s linear infinite;    
+    animation: rotation 1s linear infinite;
 }
 
 @keyframes rotation {
@@ -60,4 +60,4 @@
     100% {
         transform: rotate(360deg);
     }
-} 
+}

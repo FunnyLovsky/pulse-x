@@ -12,57 +12,61 @@ const LoginForm = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const {login} = useActions()
-    const dispatch = useAppDispatch()
-    const {error, isLoading} = useAppSelector(state => state.authReducer);
+    const { login } = useActions();
+    const dispatch = useAppDispatch();
+    const { error, isLoading } = useAppSelector((state) => state.authReducer);
 
     const clearError = () => {
-        dispatch(setError(null))
-    }
+        dispatch(setError(null));
+    };
 
     const submit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+        e.preventDefault();
         clearError();
         login(username, password);
-    }
-    
-    return(
+    };
+
+    return (
         <div className={styles.inner}>
             <div className={styles.container}>
                 <div className={styles.item}>
-                    <div 
+                    <div
                         className={styles.error}
-                        style={{opacity: error ? 1 : 0}}
+                        style={{ opacity: error ? 1 : 0 }}
                     >
                         {error}
                     </div>
-                    <Logo/>
+                    <Logo />
                     <h3 className={styles.title}>Вход</h3>
                     <form className={styles.form} onSubmit={submit}>
-                        <Input 
-                            type='text' 
-                            placeholder='Username'
+                        <Input
+                            type="text"
+                            placeholder="Username"
                             required={true}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>,
+                            ) => setUsername(e.target.value)}
                             value={username}
                             disabled={isLoading}
-                            onFocus={clearError} 
+                            onFocus={clearError}
                         />
-                        <Input 
-                            type='password' 
-                            placeholder='Password'
+                        <Input
+                            type="password"
+                            placeholder="Password"
                             required={true}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>,
+                            ) => setPassword(e.target.value)}
                             value={password}
                             disabled={isLoading}
-                            onFocus={clearError}    
+                            onFocus={clearError}
                         />
                         <BtnLogin loading={isLoading}>Войти</BtnLogin>
                     </form>
                 </div>
             </div>
         </div>
-    )
+    );
 };
 
 export default LoginForm;

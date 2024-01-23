@@ -1,16 +1,15 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Instrument } from "../../../api/Enums"
-import { Quote } from "../../../Models/Base"
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Instrument } from '../../../api/Enums';
+import { Quote } from '../../../Models/Base';
 
 interface MarketState {
-    subscriptionId: string | null,
-    instrument: Instrument | null,
-    bid: number
-    offer: number,
-    isLoading: boolean,
-    error: string | null
+    subscriptionId: string | null;
+    instrument: Instrument | null;
+    bid: number;
+    offer: number;
+    isLoading: boolean;
+    error: string | null;
 }
-
 
 const initialState: MarketState = {
     subscriptionId: null,
@@ -18,37 +17,43 @@ const initialState: MarketState = {
     bid: 0,
     offer: 0,
     error: null,
-    isLoading: false
-}
+    isLoading: false,
+};
 
 const marketReducer = createSlice({
     name: 'market',
     initialState,
     reducers: {
         setIsLoading(state, action: PayloadAction<boolean>) {
-            state.isLoading = action.payload
+            state.isLoading = action.payload;
         },
 
         setPrice(state, action: PayloadAction<Quote>) {
             state.bid = action.payload.bid;
             state.offer = action.payload.offer;
         },
-        
+
         setSubscriptionId(state, action: PayloadAction<string | null>) {
-            state.subscriptionId = action.payload
+            state.subscriptionId = action.payload;
         },
 
         succesSub(state, action: PayloadAction<string>) {
             state.isLoading = false;
-            state.subscriptionId = action.payload
+            state.subscriptionId = action.payload;
         },
-        
+
         setError(state, action: PayloadAction<string | null>) {
-            state.error = action.payload
-        }
-    }
-})
+            state.error = action.payload;
+        },
+    },
+});
 
-export const {setIsLoading, setPrice, setSubscriptionId, succesSub, setError} = marketReducer.actions
+export const {
+    setIsLoading,
+    setPrice,
+    setSubscriptionId,
+    succesSub,
+    setError,
+} = marketReducer.actions;
 
-export default marketReducer.reducer
+export default marketReducer.reducer;
