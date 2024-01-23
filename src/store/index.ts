@@ -4,15 +4,11 @@ import { socketMiddleware } from './reducers/socket/middleware';
 
 const rootReducer = combineReducers(reducers);
 
+const customMiddleware: Middleware = socketMiddleware('wss://socketsbay.com/wss/v2/1/demo/');
+
 export const store = configureStore({
     reducer: rootReducer,
-    middleware(getDefaultMiddleware) {
-        const customMiddleware: Middleware = socketMiddleware(
-            'wss://socketsbay.com/wss/v2/1/demo/',
-        );
-
-        return getDefaultMiddleware().concat(customMiddleware);
-    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(customMiddleware),
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

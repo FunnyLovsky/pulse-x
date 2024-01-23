@@ -1,14 +1,14 @@
 import { setError, setIsLoading, setPrice, setSubscriptionId } from '.';
 import { AppDispatch } from '../..';
 import { ClientMessageType, Instrument } from '../../../api/Enums';
-import { sendMessage } from '../socket';
+import { send } from '../socket/actionCreators';
 
 const subscribe = (instrument: Instrument) => async (dispatch: AppDispatch) => {
     dispatch(setIsLoading(true));
     dispatch(setError(null));
 
     dispatch(
-        sendMessage({
+        send({
             messageType: ClientMessageType.subscribeMarketData,
             message: {
                 instrument,
@@ -19,7 +19,7 @@ const subscribe = (instrument: Instrument) => async (dispatch: AppDispatch) => {
 
 const unsubscribe = (subscriptionId: string) => async (dispatch: AppDispatch) => {
     dispatch(
-        sendMessage({
+        send({
             messageType: ClientMessageType.unsubscribeMarketData,
             message: {
                 subscriptionId,

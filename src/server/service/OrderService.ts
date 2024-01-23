@@ -50,7 +50,11 @@ export class OrderService {
         } as ServerEnvelope;
     }
 
-    static cancelOrder(data: ClientEnvelope, cancel: (id: string) => Promise<void>, obj: IWSServer) {
+    static cancelOrder(
+        data: ClientEnvelope,
+        cancel: (id: string) => Promise<void>,
+        obj: IWSServer,
+    ) {
         const { orderId } = data.message as CancelOrder;
         const boundCancel = cancel.bind(obj);
         boundCancel(orderId);

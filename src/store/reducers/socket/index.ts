@@ -44,7 +44,7 @@ const socketReducer = createSlice({
             state.isLoading = false;
         },
 
-        sendMessage(state, action: PayloadAction<{}>) {
+        sendMessage(state, action: PayloadAction<string>) {
             state.message = action.payload;
         },
 

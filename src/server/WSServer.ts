@@ -63,7 +63,7 @@ export class WSServer {
                 break;
 
             case ClientMessageType.cancelOrder:
-                OrderService.cancelOrder(data, this.cancelPlaceOrder, this)
+                OrderService.cancelOrder(data, this.cancelPlaceOrder, this);
 
                 break;
 

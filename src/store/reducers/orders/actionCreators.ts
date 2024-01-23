@@ -12,7 +12,7 @@ import { IChangeOrder, IOrder } from '../../../Models/IOrder';
 import { DBService } from '../../../api/DBService';
 import { ClientMessageType, OrderStatus } from '../../../api/Enums';
 import { DtoOrder } from '../../../dto/DtoOrder';
-import { sendMessage } from '../socket';
+import { send } from '../socket/actionCreators';
 
 interface Order {
     side: number;
@@ -33,7 +33,7 @@ const createOrder = (obj: Order) => async (dispatch: AppDispatch) => {
             amount: obj.amount,
             instrument: obj.instrument,
         };
-        dispatch(sendMessage(DtoOrder(order)));
+        dispatch(send(DtoOrder(order)));
         dispatch(placeOrder(order));
         dispatch(placeActiveOrder({ id: order.id }));
 
@@ -52,11 +52,11 @@ export const changeStatusOrder =
                 change: Date.now(),
                 status,
             };
+            dispatch(cancelActiveOrder({ id }));
 
             if (status === OrderStatus.cancelled) {
-                dispatch(cancelActiveOrder({ id }));
                 dispatch(
-                    sendMessage({
+                    send({
                         messageType: ClientMessageType.cancelOrder,
                         message: {
                             orderId: id,
