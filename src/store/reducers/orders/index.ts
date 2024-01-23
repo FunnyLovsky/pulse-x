@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IActiveOrder, IChangeOrder, IOrder } from '../../../Models/IOrder';
+import { SortType } from '../../../api/Enums';
 
 interface OrderState {
     orders: IOrder[];
@@ -52,6 +53,12 @@ const ordersReducer = createSlice({
         addActiveOrders(state, action: PayloadAction<IActiveOrder[]>) {
             state.activeOrders = action.payload;
         },
+        sortMinMax(state, action: PayloadAction<SortType>) {
+            state.orders.sort((a, b) => a[action.payload] - b[action.payload]);
+        },
+        sortMaxMin(state, action: PayloadAction<SortType>) {
+            state.orders.sort((a, b) => b[action.payload] - a[action.payload]);
+        },
     },
 });
 
@@ -63,6 +70,8 @@ export const {
     setOrder,
     addActiveOrders,
     deleteOrder,
+    sortMinMax,
+    sortMaxMin,
 } = ordersReducer.actions;
 
 export default ordersReducer.reducer;

@@ -1,10 +1,18 @@
+import { SortType } from '../../api/Enums';
 import { useAppSelector } from '../../store/hooks/useAppSelector';
 import Order from '../Order';
 
 import styles from './style.module.scss';
+import SortName from '../ui/SortName';
+import { useSortOrders } from './utils/useSortOrders';
 
 const OrderList = () => {
     const { orders } = useAppSelector((state) => state.ordersReducer);
+
+    const sortCreateHandler = useSortOrders(SortType.create);
+    const sortChangeHandler = useSortOrders(SortType.change);
+    const sortPriceHandler = useSortOrders(SortType.price);
+    const sortAmountHandler = useSortOrders(SortType.amount);
 
     return (
         <div className={styles.inner}>
@@ -12,14 +20,14 @@ const OrderList = () => {
 
             <div className={styles.cont}>
                 <div className={styles.header}>
-                    <p>ID</p>
-                    <p>Создано</p>
-                    <p>Изменено</p>
-                    <p>Статус</p>
-                    <p>Сторона</p>
-                    <p>Цена</p>
-                    <p>Объем</p>
-                    <p>Инструмент</p>
+                    <div>ID</div>
+                    <SortName onClick={sortCreateHandler}>Создано</SortName>
+                    <SortName onClick={sortChangeHandler}>Изменено</SortName>
+                    <div>Статус</div>
+                    <div>Сторона</div>
+                    <SortName onClick={sortPriceHandler}>Цена</SortName>
+                    <SortName onClick={sortAmountHandler}>Объем</SortName>
+                    <div>Инструмент</div>
                 </div>
                 <div className={styles.list}>
                     {orders.length > 0 ? (

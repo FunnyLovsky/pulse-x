@@ -7,6 +7,7 @@ export interface IOrder {
     price: number;
     amount: number;
     instrument: number;
+
 }
 
 export interface IActiveOrder {

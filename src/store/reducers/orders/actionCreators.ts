@@ -6,11 +6,13 @@ import {
     placeActiveOrder,
     placeOrder,
     setOrder,
+    sortMaxMin,
+    sortMinMax
 } from '.';
 import { AppDispatch, RootState } from '../..';
 import { IChangeOrder, IOrder } from '../../../Models/IOrder';
 import { DBService } from '../../../api/DBService';
-import { ClientMessageType, OrderStatus } from '../../../api/Enums';
+import { ClientMessageType, OrderStatus, SortType, VariantSort } from '../../../api/Enums';
 import { DtoOrder } from '../../../dto/DtoOrder';
 import { send } from '../socket/actionCreators';
 
@@ -97,9 +99,18 @@ const fetchOrders = () => async (dispatch: AppDispatch) => {
     }
 };
 
+const sortCreate = (value: VariantSort, type: SortType) => async (dispatch: AppDispatch) => {
+    if (value === VariantSort.min_max) {
+        dispatch(sortMinMax(type));
+    } else {
+        dispatch(sortMaxMin(type));
+    }
+};
+
 export const OrderActionCreators = {
     createOrder,
     changeStatusOrder,
     clearOrder,
     fetchOrders,
+    sortCreate,
 };

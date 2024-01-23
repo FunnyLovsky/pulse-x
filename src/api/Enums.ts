@@ -29,3 +29,15 @@ export enum Instrument {
     eur_rub,
     usd_rub,
 }
+
+export enum VariantSort {
+    min_max = 1,
+    max_min,
+}
+
+export enum SortType {
+    create = 'create',
+    change = 'change',
+    price = 'price',
+    amount = 'amount',
+}
