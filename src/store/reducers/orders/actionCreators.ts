@@ -7,7 +7,7 @@ import {
     placeOrder,
     setOrder,
     sortMaxMin,
-    sortMinMax
+    sortMinMax,
 } from '.';
 import { AppDispatch, RootState } from '../..';
 import { IChangeOrder, IOrder } from '../../../Models/IOrder';
@@ -94,6 +94,7 @@ const fetchOrders = () => async (dispatch: AppDispatch) => {
 
         dispatch(addActiveOrders(active));
         dispatch(addOrders(json));
+        dispatch(sortMinMax(SortType.create));
     } catch (error: any) {
         console.log(error.message);
     }
