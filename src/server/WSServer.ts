@@ -22,7 +22,7 @@ export class WSServer {
             if (this.onopen && this.onmessage) {
                 this.onopen();
             }
-        }, 1000);
+        }, 2000);
     }
 
     async close() {
